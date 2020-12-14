@@ -1,0 +1,7 @@
+{
+  "name": "WaxDraft21",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
