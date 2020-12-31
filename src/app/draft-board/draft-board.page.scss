@@ -1,0 +1,15 @@
+ion-slide {
+  display: flex;
+  flex-direction: column;
+
+  .team-name {
+    // background-color: gray;
+    font-size: 60%;
+    height: 30px;
+  }
+
+  ion-card {
+    width: 78px;
+    height: 90px;
+  }
+}

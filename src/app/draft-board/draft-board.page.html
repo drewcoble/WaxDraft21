@@ -1,0 +1,36 @@
+<ion-header [translucent]="true" class='ion-no-border'>
+  <ion-toolbar>
+    <ion-title>
+      Draft Board
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+<ion-slides [options]='slideOpts' class='ion-padding' mode='ios'>
+
+  <ion-slide *ngFor='let team of teams' class='ion-no-padding'>
+    <h6 class='team-name'>{{team.name}}</h6>
+
+    <div *ngFor='let pick of team.picks'>
+
+      
+        <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{pick.pick}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{team.name}}
+        </ion-card-content>
+        </ion-card>
+      
+    </div>
+  </ion-slide>
+
+
+
+
+</ion-slides>
+
+</ion-content>

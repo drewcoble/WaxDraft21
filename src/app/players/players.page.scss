@@ -1,0 +1,119 @@
+ion-slides {
+  height: 100%;
+  overflow-y: scroll;
+
+  ion-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    div {
+      margin: 0px;
+      padding: 0;
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    ion-card {
+      width: 140px;
+      min-height: 105px;
+      margin: 0;
+      margin-top: 8px;
+      border-radius: 12px;
+      opacity: 0.9;
+      padding: 5px 0;
+
+      &:hover {
+        // opacity: 0.8;
+      }
+
+      ion-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        padding: 0 10px;
+
+        ion-avatar {
+          display: flex;
+          align-items: center;
+
+          height: 100%;
+
+          img {
+            height: 40px;
+            width: auto;
+            min-width: 32px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.65);
+          }
+        }
+        ion-card-subtitle {
+          margin: 0 auto 0 5px;
+        }
+      }
+      ion-card-content {
+        padding: 0px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .player-info {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          font-size: 80%;
+
+          ion-badge {
+            opacity: 0.4;
+            font-size: 80%;
+          }
+
+          ion-icon {
+            margin-left: 10px;
+            height: 15px;
+          }
+        }
+
+        .player-stats {
+          width: 100%;
+          margin-top: 2px;
+          display: flex;
+          justify-content: space-between;
+
+          .stats-left {
+            width: 70%;
+            text-align: left;
+            p {
+              font-size: 60%;
+            }
+          }
+          .stats-right {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 80%;
+
+            ion-badge {
+              text-align: center;
+              font-size: 80%;
+              opacity: 0.9;
+            }
+          }
+        }
+
+        .card-click {
+          font-size: 70%;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

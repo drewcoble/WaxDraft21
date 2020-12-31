@@ -1,0 +1,164 @@
+<ion-header [translucent]="true" class='ion-no-border'>
+  <ion-toolbar>
+    <ion-title>
+      Available Players
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+<ion-slides [options]='slideOpts' class='ion-padding' mode='ios'>
+
+  <ion-slide *ngFor='let position of positions'>
+    <h2>{{position}}</h2>
+    
+    <div *ngFor='let player of players'>
+
+      <ion-card *ngIf='player.position == position' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle class='ion-text-left'>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>Bye: {{player.bye}}</ion-badge>
+        </div>
+          <div class="player-stats">
+            <div class="stats-left">
+              <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+              <p><b>2021:</b> {{player.stats.y2021.points}} pts.</p>
+            </div>
+            <div class="stats-right">
+              <div>+/-</div>
+              <ion-badge [color]='player.stats.pm > 0 ? "success" : "danger"'>{{player.stats.pm}}</ion-badge>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    
+    </div>
+  </ion-slide>
+
+
+
+  <!-- <ion-slide>
+    <h2>RB</h2>
+  
+    <div *ngFor='let player of players'>
+  
+      <ion-card *ngIf='player.position == "RB"' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>{{player.bye}}</ion-badge>
+          </div>
+          <div class="player-stats">
+            <p><b>2019:</b> {{player.stats.y2019.points}} pts.</p>
+            <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+          </div>
+          <p class='card-click'>Click to draft.</p>
+        </ion-card-content>
+      </ion-card>
+  
+    </div>
+  </ion-slide>
+
+  <ion-slide>
+    <h2>WR</h2>
+  
+    <div *ngFor='let player of players'>
+  
+      <ion-card *ngIf='player.position == "WR"' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>{{player.bye}}</ion-badge>
+          </div>
+          <div class="player-stats">
+            <p><b>2019:</b> {{player.stats.y2019.points}} pts.</p>
+            <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+          </div>
+          <p class='card-click'>Click to draft.</p>
+        </ion-card-content>
+      </ion-card>
+  
+    </div>
+  </ion-slide>
+
+  <ion-slide>
+    <h2>TE</h2>
+  
+    <div *ngFor='let player of players'>
+  
+      <ion-card *ngIf='player.position == "TE"' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>{{player.bye}}</ion-badge>
+          </div>
+          <div class="player-stats">
+            <p><b>2019:</b> {{player.stats.y2019.points}} pts.</p>
+            <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+          </div>
+          <p class='card-click'>Click to draft.</p>
+        </ion-card-content>
+      </ion-card>
+  
+    </div>
+  </ion-slide>
+
+  <ion-slide>
+    <h2>DEF</h2>
+  
+    <div *ngFor='let player of players'>
+  
+      <ion-card *ngIf='player.position == "DEF"' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>{{player.bye}}</ion-badge>
+          </div>
+          <div class="player-stats">
+            <p><b>2019:</b> {{player.stats.y2019.points}} pts.</p>
+            <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+          </div>
+          <p class='card-click'>Click to draft.</p>
+        </ion-card-content>
+      </ion-card>
+  
+    </div>
+  </ion-slide> -->
+
+</ion-slides>
+
+  <!-- <app-explore-container name="Players page"></app-explore-container> -->
+</ion-content>

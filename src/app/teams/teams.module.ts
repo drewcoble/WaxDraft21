@@ -1,20 +1,22 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
+
+import { IonicModule } from '@ionic/angular';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { TeamsPageRoutingModule } from './teams-routing.module';
+
+import { TeamsPage } from './teams.page';
 
 @NgModule({
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
+    IonicModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    TeamsPageRoutingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [TeamsPage]
 })
-export class Tab1PageModule {}
+export class TeamsPageModule {}
