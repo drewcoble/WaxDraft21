@@ -277,4 +277,293 @@ export class DraftBoardPage implements OnInit {
     }
   ];
 
+  draft = {
+    settings: {
+      numRounds: 15,
+      numTeams: 15
+    },
+    slides: [
+      {
+        team: 'AyFiP7mYPsxaBwUcEkOX',
+        picks: [
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 1,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 24,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 25,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 36,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 37,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 48,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 49,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 60,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 61,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 72,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 73,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 84,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 85,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 96,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 97,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 108,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 109,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 120,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 121,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 132,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 133,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 144,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 145,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 156,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 157,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 168,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 169,
+            player: '',
+          }
+        ]
+      },
+      {
+        team: 'HrSXVERVg5qAn9J5Pp3W',
+        picks: [
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 2,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 23,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 26,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 35,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 38,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 47,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 50,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 59,
+            player: '',
+          },
+          {
+            team: 'AyFiP7mYPsxaBwUcEkOX',
+            number: 62,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 71,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 74,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 83,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 86,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 95,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 98,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 107,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 110,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 119,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 122,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 131,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 134,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 143,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 146,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 155,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 158,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 167,
+            player: '',
+          },
+          {
+            team: 'HrSXVERVg5qAn9J5Pp3W',
+            number: 170,
+            player: '',
+          }
+        ]
+      },
+    ]
+  };
+
 }
