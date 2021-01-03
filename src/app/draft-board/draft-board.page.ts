@@ -22,14 +22,18 @@ export class DraftBoardPage implements OnInit {
   ngOnInit() {
   }
 
+  draftSettings = {
+    numRounds: 15
+  };
+
   teams = [
     {
       name:"Original Recipe",
       draftSpot: 1,
       picks: [
-        {pick:1,player:0,team:0},
+        {pick:1,player:0,team:'Jurasskicked Park'},
         {pick:12,player:0,team:0},
-        {pick:1,player:0,team:0},
+        {pick:1,player:0,team:'YoungHamstringInjury'},
         {pick:12,player:0,team:0},
         {pick:1,player:0,team:0},
         {pick:12,player:0,team:0},
@@ -48,42 +52,42 @@ export class DraftBoardPage implements OnInit {
       name:"Jurasskicked Park",
       draftSpot: 2,
       picks: [
-        {pick:1,player:0,team:1},
         {pick:2,player:0,team:1},
-        {pick:3,player:0,team:1},
-        {pick:4,player:0,team:1},
-        {pick:5,player:0,team:1},
-        {pick:6,player:0,team:1},
-        {pick:7,player:0,team:1},
-        {pick:8,player:0,team:1},
-        {pick:9,player:0,team:1},
-        {pick:10,player:0,team:1},
         {pick:11,player:0,team:1},
-        {pick:12,player:0,team:1},
-        {pick:13,player:0,team:1},
-        {pick:14,player:0,team:1},
-        {pick:15,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
+        {pick:11,player:0,team:1},
+        {pick:2,player:0,team:1},
       ]
     },
     {
       name:"YoungHamstringInjury",
       draftSpot: 3,
       picks: [
-        {pick:1,player:0,team:2},
-        {pick:2,player:0,team:2},
         {pick:3,player:0,team:2},
-        {pick:4,player:0,team:2},
-        {pick:5,player:0,team:2},
-        {pick:6,player:0,team:2},
-        {pick:7,player:0,team:2},
-        {pick:8,player:0,team:2},
-        {pick:9,player:0,team:2},
         {pick:10,player:0,team:2},
-        {pick:11,player:0,team:2},
-        {pick:12,player:0,team:2},
-        {pick:13,player:0,team:2},
-        {pick:14,player:0,team:2},
-        {pick:15,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
+        {pick:10,player:0,team:2},
+        {pick:3,player:0,team:2},
       ]
     },
     {

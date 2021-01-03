@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { PlayersPageRoutingModule } from './players-routing.module';
 
@@ -14,7 +13,6 @@ import { PlayersPage } from './players.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ExploreContainerComponentModule,
     PlayersPageRoutingModule
   ],
   declarations: [PlayersPage]

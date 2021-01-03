@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-players',
@@ -21,9 +22,19 @@ export class PlayersPage implements OnInit {
     loop: false
   };
 
-  constructor() { }
+  constructor(public auth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  login():void {
+    console.log('login clicked');
+    this.auth.login();
+  }
+
+  logout():void {
+    console.log('logout clicked');
+    this.auth.logout();
   }
 
   draftPlayer(playerId):void {

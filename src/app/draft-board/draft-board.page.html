@@ -8,26 +8,51 @@
 
 <ion-content [fullscreen]="true">
 
-<ion-slides [options]='slideOpts' class='ion-padding' mode='ios'>
+  
 
-  <ion-slide *ngFor='let team of teams' class='ion-no-padding'>
-    <h6 class='team-name'>{{team.name}}</h6>
+<ion-slides [options]='slideOpts' class='ion-padding-horizontal' mode='ios'>
 
-    <div *ngFor='let pick of team.picks'>
+  <!-- Start of slide to display round # 
+  <ion-slide class='ion-no-padding'>
+    <h6 class='team-name'>Round</h6>
+    <div *ngxRange='let round from 0 to draftSettings.numRounds by 1'>
+      <div class='round-num'>
+        Round {{round + 1}}
+      </div>
+    </div>
+  </ion-slide>
+   End of slide to display round # -->
 
-      
-        <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{pick.pick}}</ion-card-title>
+  <ion-slide *ngFor='let team of teams; index as idx;' class='ion-no-padding'>
+    <h6 class='team-name ion-text-wrap'>{{team.name}}</h6>
+
+    <div *ngFor='let pick of team.picks; index as pickIdx;'>
+      <ion-card>
+        <ion-card-header *ngIf='pick.player == 0'>
+          <ion-card-subtitle>{{pickIdx+1}}.{{pick.pick}}</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
-          {{team.name}}
+        <ion-card-header *ngIf='pick.player != 0'>
+          <ion-text size='small'>{{pickIdx+1}}.{{pick.pick}}</ion-text>
+          <ion-card-subtitle>{{pick.player}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-align-items-end'>
+          <span *ngIf='pick.team != idx'>{{pick.team}}</span>
         </ion-card-content>
-        </ion-card>
-      
+      </ion-card>
     </div>
   </ion-slide>
 
+
+  <!-- Start of slide to display round # 
+  <ion-slide class='ion-no-padding'>
+    <h6 class='team-name'>Round</h6>
+    <div *ngxRange='let round from 0 to draftSettings.numRounds by 1'>
+      <div class='round-num'>
+        Round {{round + 1}}
+      </div>
+    </div>
+  </ion-slide>
+  End of slide to display round # -->
 
 
 

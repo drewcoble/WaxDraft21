@@ -1,13 +1,22 @@
 <ion-header [translucent]="true" class='ion-no-border'>
   <ion-toolbar>
-    <ion-title>
-      Available Players
-    </ion-title>
+    <ion-searchbar placeholder='Search Players'></ion-searchbar>
+    <ion-chip *ngIf='!auth.user' slot='end' (click)='login()'>
+      <ion-label size='small' color='primary'>Sign In</ion-label>
+      <!-- <ion-icon name='person-circle' color='dark' style='margin-left: 5px;'></ion-icon> -->
+    </ion-chip>
+    <ion-chip *ngIf='auth.user' slot='end'>
+      <ion-label size='small' color='primary' (click)='logout()'>Sign Out</ion-label>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
+<ion-header collapse="condense">
+  <ion-toolbar class='ion-no-border'>
+    <ion-title size="large">Available Players</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-slides [options]='slideOpts' class='ion-padding' mode='ios'>
 

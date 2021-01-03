@@ -1,3 +1,13 @@
+.round-num {
+  width: 78px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: green;
+  margin: 5px;
+}
+
 ion-slide {
   display: flex;
   flex-direction: column;
@@ -5,11 +15,40 @@ ion-slide {
   .team-name {
     // background-color: gray;
     font-size: 60%;
+    width: 100%;
     height: 30px;
   }
 
+  .active {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: black !important;
+  }
+
+  .yellow {
+    border: 2px solid yellow;
+  }
+
+  .red {
+    border: 2px solid red;
+  }
+
   ion-card {
-    width: 78px;
+    width: 90px;
     height: 90px;
+    margin: 5px 0;
+
+    ion-card-header {
+      height: 50px;
+      padding: 5px 5px 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ion-card-content {
+      font-size: 75%;
+      height: 40px;
+      padding: 2px 5px 5px;
+    }
   }
 }
