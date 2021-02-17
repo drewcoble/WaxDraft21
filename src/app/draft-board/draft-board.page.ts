@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-draft-board',
@@ -7,13 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DraftBoardPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public auth: AuthService,
+  ) { }
 
   slideOpts = {
     initialSlide: 0,
     direction: 'horizontal',
     speed: 300,
-    spaceBetween: 8,
+    spaceBetween: 0,
     slidesPerView: 3,
     freeMode: false,
     loop: false

@@ -1,7 +1,7 @@
 {
   "name": "WaxDraft21",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Andy Coble",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "serve-lab": "ionic serve -l",

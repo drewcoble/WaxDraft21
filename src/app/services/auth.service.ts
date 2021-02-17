@@ -16,6 +16,10 @@ export class AuthService {
     })
   }
 
+  displayLoginOptions():void {
+    
+  }
+
   login():void {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }

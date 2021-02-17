@@ -1,31 +1,58 @@
-<ion-header [translucent]="true" class='ion-no-border'>
+<ion-header [translucent]="false" class='ion-no-border'>
+  <!-- <ion-title>WaxDraft 21</ion-title> -->
   <ion-toolbar>
-    <ion-searchbar placeholder='Search Players'></ion-searchbar>
-    <ion-chip *ngIf='!auth.user' slot='end' (click)='login()'>
-      <ion-label size='small' color='primary'>Sign In</ion-label>
-      <!-- <ion-icon name='person-circle' color='dark' style='margin-left: 5px;'></ion-icon> -->
+    <ion-searchbar placeholder=''></ion-searchbar>
+    <ion-chip slot='end'>
+      <ion-icon color='dark' name='filter' style='margin: 0;'></ion-icon>
     </ion-chip>
-    <ion-chip *ngIf='auth.user' slot='end'>
-      <ion-label size='small' color='primary' (click)='logout()'>Sign Out</ion-label>
+    <ion-chip *ngIf='!auth.user' slot='end' (click)='login()'>
+      Sign In
+    </ion-chip>
+    <ion-chip *ngIf='auth.user' slot='end' (click)='logout()'>
+      Sign Out
     </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<ion-header collapse="condense">
+<ion-title>Players</ion-title>
+
+
+
+  <!---
+    
+  <ion-slides class='intro-slides' [options]='welcomeSlideOpts' *ngIf='!newUser'>
+    <ion-slide>
+      <img src="assets/images/introSlides/slide1.jpg" alt="">
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/images/introSlides/slide2.jpg" alt="">
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/images/introSlides/slide3.jpg" alt="">
+    </ion-slide>
+    <ion-slide class='last-slide'>
+      <ion-button (click)='dismissIntro()'>Get Started</ion-button>
+    </ion-slide>
+  </ion-slides>
+
+
+<ion-header collapse="condense" class='ion-no-border'>
   <ion-toolbar class='ion-no-border'>
-    <ion-title size="large">Available Players</ion-title>
+    <ion-title slot='start'>Available Players</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-slides [options]='slideOpts' class='ion-padding' mode='ios'>
+-->
+<ion-slides [options]='slideOpts' class='ion-padding player-slides' mode='ios'>
 
   <ion-slide *ngFor='let position of positions'>
     <h2>{{position}}</h2>
     
     <div *ngFor='let player of players'>
 
-      <ion-card *ngIf='player.position == position' (click)='draftPlayer(player.id)' [color]='player.tier'>
+      <!-- OLD CARD FORMAT -->
+      <!-- <ion-card *ngIf='player.position == position' (click)='draftPlayer(player.id)' [color]='player.tier'>
         <ion-card-header class='ion-no-padding'>
           <ion-avatar>
             <img src="/assets/images/players/{{player.id}}.png" alt="">
@@ -48,8 +75,37 @@
             </div>
           </div>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
     
+      <!-- NEW CARD FORMAT -->
+
+      
+
+      <ion-card *ngIf='player.position == position' (click)='draftPlayer(player.id)' [color]='player.tier'>
+        <ion-card-header class='ion-no-padding'>
+          <ion-avatar>
+            <img src="/assets/images/players/{{player.id}}.png" alt="">
+          </ion-avatar>
+          <ion-card-subtitle class='ion-text-left'>{{player.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class='ion-no-padding'>
+          <div class='player-info'>
+            <b>{{player.position}} - {{player.team}}</b>
+            <ion-badge color='light'>Bye: {{player.bye}}</ion-badge>
+          </div>
+          <div class="player-stats">
+            <div class="stats-left">
+              <p><b>2020:</b> {{player.stats.y2020.points}} pts.</p>
+              <p><b>2021:</b> {{player.stats.y2021.points}} pts.</p>
+            </div>
+            <div class="stats-right">
+              <div>+/-</div>
+              <ion-badge [color]='player.stats.pm > 0 ? "success" : "danger"'>{{player.stats.pm}}</ion-badge>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
     </div>
   </ion-slide>
 
@@ -167,7 +223,9 @@
     </div>
   </ion-slide> -->
 
+  
 </ion-slides>
 
   <!-- <app-explore-container name="Players page"></app-explore-container> -->
+
 </ion-content>
