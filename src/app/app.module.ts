@@ -11,6 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PopoverComponentPageModule } from './popover-component/popover-component.module';
 
 //  firebase imports
 import { AngularFireModule } from '@angular/fire';
@@ -23,6 +24,8 @@ import { environment } from '../environments/environment';
 
 //native storage
 import { IonicStorageModule } from '@ionic/storage';
+
+import { HeaderComponentModule } from './header/header.module';
 
 
 
@@ -38,7 +41,9 @@ import { IonicStorageModule } from '@ionic/storage';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    PopoverComponentPageModule,
+    // HeaderComponentModule
 ],
   providers: [
     StatusBar,

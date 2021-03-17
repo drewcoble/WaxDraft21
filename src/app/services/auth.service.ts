@@ -8,22 +8,29 @@ import firebase from 'firebase/app';
 export class AuthService {
 
   public user;
+  public uid;
 
   constructor(public auth: AngularFireAuth) {
     auth.authState.subscribe(user=> {
       this.user = user;
+      this.uid = user.uid;
       console.log(this.user);
+      console.log(this.uid);
     })
   }
 
-  displayLoginOptions():void {
+  displayLoginOptions() {
     
   }
 
-  login():void {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  login() {
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then((userDoc)=> {
+      this.user = userDoc;
+      console.log(this.user);
+      console.log(this.user.additionalUserInfo.profile.given_name);
+    })
   }
-  logout():void {
+  logout() {
     this.auth.signOut();
   }
 

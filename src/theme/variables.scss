@@ -108,6 +108,71 @@
   --ion-color-tint: var(--ion-color-k-tint);
 }
 
+//trying stepped down player tiers
+
+.ion-color-one {
+  --ion-color-base: var(--ion-color-one);
+  --ion-color-base-rgb: var(--ion-color-one-rgb);
+  --ion-color-contrast: var(--ion-color-one-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-one-contrast-rgb);
+  --ion-color-shade: var(--ion-color-one-shade);
+  --ion-color-tint: var(--ion-color-one-tint);
+}
+
+.ion-color-two {
+  --ion-color-base: var(--ion-color-two);
+  --ion-color-base-rgb: var(--ion-color-two-rgb);
+  --ion-color-contrast: var(--ion-color-two-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-two-contrast-rgb);
+  --ion-color-shade: var(--ion-color-two-shade);
+  --ion-color-tint: var(--ion-color-two-tint);
+}
+
+.ion-color-three {
+  --ion-color-base: var(--ion-color-three);
+  --ion-color-base-rgb: var(--ion-color-three-rgb);
+  --ion-color-contrast: var(--ion-color-three-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-three-contrast-rgb);
+  --ion-color-shade: var(--ion-color-three-shade);
+  --ion-color-tint: var(--ion-color-three-tint);
+}
+
+.ion-color-four {
+  --ion-color-base: var(--ion-color-four);
+  --ion-color-base-rgb: var(--ion-color-four-rgb);
+  --ion-color-contrast: var(--ion-color-four-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-four-contrast-rgb);
+  --ion-color-shade: var(--ion-color-four-shade);
+  --ion-color-tint: var(--ion-color-four-tint);
+}
+
+.ion-color-five {
+  --ion-color-base: var(--ion-color-five);
+  --ion-color-base-rgb: var(--ion-color-five-rgb);
+  --ion-color-contrast: var(--ion-color-five-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-five-contrast-rgb);
+  --ion-color-shade: var(--ion-color-five-shade);
+  --ion-color-tint: var(--ion-color-five-tint);
+}
+
+.ion-color-six {
+  --ion-color-base: var(--ion-color-six);
+  --ion-color-base-rgb: var(--ion-color-six-rgb);
+  --ion-color-contrast: var(--ion-color-six-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-six-contrast-rgb);
+  --ion-color-shade: var(--ion-color-six-shade);
+  --ion-color-tint: var(--ion-color-six-tint);
+}
+
+.ion-color-seven {
+  --ion-color-base: var(--ion-color-seven);
+  --ion-color-base-rgb: var(--ion-color-seven-rgb);
+  --ion-color-contrast: var(--ion-color-seven-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-seven-contrast-rgb);
+  --ion-color-shade: var(--ion-color-seven-shade);
+  --ion-color-tint: var(--ion-color-seven-tint);
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
@@ -222,6 +287,57 @@
   --ion-color-steel-contrast-rgb: 255, 255, 255;
   --ion-color-steel-shade: #6c6c6c;
   --ion-color-steel-tint: #888888;
+
+  // trying stepped down player tiers
+
+  --ion-color-one: #f7f8f9;
+  --ion-color-one-rgb: 247, 248, 249;
+  --ion-color-one-contrast: #000000;
+  --ion-color-one-contrast-rgb: 0, 0, 0;
+  --ion-color-one-shade: #d9dadb;
+  --ion-color-one-tint: #f8f9fa;
+
+  --ion-color-two: #c4c8d1;
+  --ion-color-two-rgb: 196, 200, 209;
+  --ion-color-two-contrast: #000000;
+  --ion-color-two-contrast-rgb: 0, 0, 0;
+  --ion-color-two-shade: #acb0b8;
+  --ion-color-two-tint: #caced6;
+
+  --ion-color-three: #9399a8;
+  --ion-color-three-rgb: 147, 153, 168;
+  --ion-color-three-contrast: #000000;
+  --ion-color-three-contrast-rgb: 0, 0, 0;
+  --ion-color-three-shade: #818794;
+  --ion-color-three-tint: #9ea3b1;
+
+  --ion-color-four: #636b7e;
+  --ion-color-four-rgb: 99, 107, 126;
+  --ion-color-four-contrast: #ffffff;
+  --ion-color-four-contrast-rgb: 255, 255, 255;
+  --ion-color-four-shade: #575e6f;
+  --ion-color-four-tint: #737a8b;
+
+  --ion-color-five: #444a5a;
+  --ion-color-five-rgb: 68, 74, 90;
+  --ion-color-five-contrast: #ffffff;
+  --ion-color-five-contrast-rgb: 255, 255, 255;
+  --ion-color-five-shade: #3c414f;
+  --ion-color-five-tint: #575c6b;
+
+  --ion-color-six: #262a34;
+  --ion-color-six-rgb: 38, 42, 52;
+  --ion-color-six-contrast: #ffffff;
+  --ion-color-six-contrast-rgb: 255, 255, 255;
+  --ion-color-six-shade: #21252e;
+  --ion-color-six-tint: #3c3f48;
+
+  --ion-color-seven: #090a0d;
+  --ion-color-seven-rgb: 9, 10, 13;
+  --ion-color-seven-contrast: #ffffff;
+  --ion-color-seven-contrast-rgb: 255, 255, 255;
+  --ion-color-seven-shade: #08090b;
+  --ion-color-seven-tint: #222325;
 
   // colors for positions
 

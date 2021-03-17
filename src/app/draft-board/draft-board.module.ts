@@ -8,6 +8,7 @@ import { NgxRangeModule } from 'ngx-range';
 import { DraftBoardPageRoutingModule } from './draft-board-routing.module';
 
 import { DraftBoardPage } from './draft-board.page';
+import { HeaderComponent } from '../header/header.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { DraftBoardPage } from './draft-board.page';
     FormsModule,
     IonicModule,
     NgxRangeModule,
-    DraftBoardPageRoutingModule
+    DraftBoardPageRoutingModule,
+    // HeaderComponent
   ],
   declarations: [DraftBoardPage]
 })

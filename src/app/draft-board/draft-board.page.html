@@ -1,10 +1,10 @@
 <ion-header [translucent]="true" class='ion-no-border'>
-  <!-- <ion-title>WaxDraft 21</ion-title> -->
   <ion-toolbar>
-    <ion-chip *ngIf='!auth.user' slot='end' (click)='login()'>
+    <ion-title>League name</ion-title>
+    <ion-chip *ngIf='!auth.user' slot='end' (click)='auth.login()'>
       Sign In
     </ion-chip>
-    <ion-chip *ngIf='auth.user' slot='end' (click)='logout()'>
+    <ion-chip *ngIf='auth.user' slot='end' (click)='auth.logout()'>
       Sign Out
     </ion-chip>
   </ion-toolbar>
@@ -29,20 +29,22 @@
   <ion-slide *ngFor='let team of teams; index as idx;' class='ion-no-padding'>
     <h6 class='team-name ion-text-wrap'>{{team.name}}</h6>
 
-    <div *ngFor='let pick of team.picks; index as pickIdx;'>
-      <ion-card>
+
+    <div class='draft-picks-div' *ngFor='let pick of team.picks; index as pickIdx;'>
+      <ion-card [style.borderColor]="pService.getBorderColor('RB')">
         <ion-card-header *ngIf='pick.player == 0'>
-          <ion-card-subtitle>{{pickIdx+1}}.{{pick.pick}}</ion-card-subtitle>
+          <ion-card-subtitle>{{pickIdx+1}}.{{calcPickNumber(team.pick, pickIdx+1)}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-header *ngIf='pick.player != 0'>
           <ion-text size='small'>{{pickIdx+1}}.{{pick.pick}}</ion-text>
           <ion-card-subtitle>{{pick.player}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class='ion-align-items-end'>
-          <span *ngIf='pick.team != idx'>{{pick.team}}</span>
+          <span *ngIf='pick.team != team.teamID'>{{pick.team}}</span>
         </ion-card-content>
       </ion-card>
     </div>
+
   </ion-slide>
 
 
