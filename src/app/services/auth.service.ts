@@ -14,8 +14,8 @@ export class AuthService {
     auth.authState.subscribe(user=> {
       this.user = user;
       this.uid = user.uid;
-      console.log(this.user);
-      console.log(this.uid);
+      // console.log(this.user);
+      // console.log(this.uid);
     })
   }
 

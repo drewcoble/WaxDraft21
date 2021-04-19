@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,22 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-card {
+  --background: var(--ion-color-six);
+}
+
+/* hide the vertical scrollbar in ionic lab view */
+*::-webkit-scrollbar,
+::-webkit-scrollbar,
+ion-scroll.scroll-y,
+.inner-scroll {
+  display: none;
+}
+
+*,
+ion-scroll.scroll-y,
+.inner-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

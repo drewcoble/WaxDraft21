@@ -40,6 +40,19 @@ ion-header {
   overflow-y: scroll;
   z-index: 99;
 
+  .swiper-zoom-container {
+    ion-card {
+      transform: scale(0.975) !important;
+    }
+  }
+
+  .swiper-slide-active,
+  .swiper-slide-next {
+    ion-card {
+      transform: scale(1.02) !important;
+    }
+  }
+
   ion-slide {
     display: flex;
     flex-direction: column;
@@ -57,19 +70,126 @@ ion-header {
 
     ion-card {
       width: 140px;
-      min-height: 105px;
+      height: 116px;
       margin: 0;
-      margin-top: 8px;
+      margin-top: 9px;
       border-radius: 12px;
-      opacity: 0.95;
-      padding: 5px 0;
-      border: 4px inset #000;
+      opacity: 1;
+      padding: 2px 4px 4px;
+      // border: 4px solid #000;
 
       &:hover {
         // opacity: 0.8;
       }
 
-      ion-card-header {
+      ion-card-content {
+        * {
+          padding: 0;
+          font-size: 10px;
+        }
+
+        ion-grid {
+          height: 108px;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .player-info-row {
+          height: 36px;
+          position: relative;
+
+          .bg-div {
+            height: 36px;
+            width: 100%;
+            // padding: 2px 0 0;
+            border-radius: 8px;
+            opacity: 0.65;
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+
+          ion-img {
+            // height: 26px;
+            // width: auto;
+            width: 50px;
+            height: 36px;
+            position: absolute;
+            top: 0;
+            left: 5px;
+          }
+
+          .player-info-wrapper {
+            width: calc(100% - 55px);
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #e8e8e8;
+            line-height: 13px;
+            display: flex;
+            flex-wrap: wrap;
+
+            .player-info {
+              // background-color: orange;
+              line-height: 13px;
+              width: 38.5px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              letter-spacing: 0.5px;
+              // padding-top: 0.5px;
+              // margin-bottom: 0.5px;
+            }
+            .player-name {
+              letter-spacing: 0.5px;
+              display: flex;
+              width: 100%;
+              justify-content: center;
+              align-items: center;
+              height: 23px;
+              line-height: 11px;
+            }
+          }
+        }
+        .player-adp-bye {
+          height: 14px;
+          line-height: 14px;
+          padding-top: 0.5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          letter-spacing: 1px;
+        }
+        .player-tier-row {
+          height: 14px;
+          border-radius: 6px;
+          font-weight: 700;
+          letter-spacing: 3px;
+          border: 0.5px solid rgba(200, 200, 205, 0.25);
+
+          .player-tier-col {
+            height: 13px;
+            line-height: 13px;
+          }
+        }
+        .stats-row {
+          height: 14px;
+          line-height: 12px;
+          letter-spacing: 1px;
+
+          ion-col {
+            padding-left: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+          }
+        }
+      }
+
+      /********** OLD CARD STYLES **********/
+      /* ion-card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -107,7 +227,7 @@ ion-header {
           font-size: 80%;
 
           ion-badge {
-            opacity: 0.4;
+            opacity: 0.5;
             font-size: 80%;
           }
 
@@ -154,6 +274,7 @@ ion-header {
           text-align: center;
         }
       }
+      */
     }
   }
 }

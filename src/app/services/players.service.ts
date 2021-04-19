@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 // import { catchError, retry } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 
 // export interface Player { name: string; }
@@ -13,24 +14,17 @@ import { Observable } from 'rxjs';
 })
 export class PlayersService {
 
-  // private baseUrl = 'https://api.nfl.com/v1/';
-  // playersUrl = 'persons/32004d41-4371-0352-e57d-251eacb121bd?fs={playerStats{teamStats{passing}}}';  // URL to web api
-
   private playersCollection: AngularFirestoreCollection;
   players: Observable<Array<any>>;
   
   constructor(
-    // private http: HttpClient,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public storage: Storage
   ) {
     this.playersCollection = afs.collection('Players', ref => ref.orderBy('adp', 'asc'));
     this.players = this.playersCollection.valueChanges(
       {idField:"playerID"}
-    );
-    // console.log(this.players);
-    // this.players.forEach((doc)=> {
-      // console.log(doc);
-    // })
+    )
   }
 
   getAllPlayers():any {
@@ -41,7 +35,7 @@ export class PlayersService {
     if (position == "QB") {
       return "#ff4141";
     }
-    else if (position == "RB") {
+    else if (position == "RB" || position == "RB1" || position == "RB2") {
       return "#13d146";
     }
     else if (position == "WR") {
@@ -54,20 +48,41 @@ export class PlayersService {
       return "#8030dd";
     }
     else if (position == "K") {
-      return "#e8e8e8";
+      return "#a5a5a5";
+    }
+    else if (position == 'active') {
+      return "#e8e8e8"
     }
     else {
-      return "#696969"
+      return "#21242b"
+    }
+  }
+
+  getTierColor(tier):string {
+    if (tier == 1) {
+      return "#fafbfc";
+    }
+    else if (tier == 2) {
+      return "#c4c8d1";
+    }
+    else if (tier == 3) {
+      return "#9399a8";
+    }
+    else if (tier == 4) {
+      return "#636b7e";
+    }
+    else if (tier == 5) {
+      return "#444a5a";
+    }
+    else if (tier == 6) {
+      return "#242832";
+    }
+    else if (tier == 7) {
+      return "#090a0d";
+    }
+    else {
+      return "";
     }
   }
   
-
-  // makeTestCall():any {
-  //   let url = this.baseUrl + this.playersUrl;
-  //   console.log(url);
-
-  //   return this.http.get(url)
-  //     .pipe(
-  //     );
-  // }
 }

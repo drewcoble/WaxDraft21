@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, ObservableLike } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,13 @@ export class TeamsService {
 
   getTeams():any {
     return this.teams;
+  }
+
+  draftPlayer(playerID, teamID) {
+    //get a player object from playersService
+
+    //send the player object to the correct team (stored here)
+      //handle logic to find correct spot on team roster, etc.
   }
 
   

@@ -110,7 +110,7 @@
 
 //trying stepped down player tiers
 
-.ion-color-one {
+.ion-color-tier1 {
   --ion-color-base: var(--ion-color-one);
   --ion-color-base-rgb: var(--ion-color-one-rgb);
   --ion-color-contrast: var(--ion-color-one-contrast);
@@ -119,7 +119,7 @@
   --ion-color-tint: var(--ion-color-one-tint);
 }
 
-.ion-color-two {
+.ion-color-tier2 {
   --ion-color-base: var(--ion-color-two);
   --ion-color-base-rgb: var(--ion-color-two-rgb);
   --ion-color-contrast: var(--ion-color-two-contrast);
@@ -128,7 +128,7 @@
   --ion-color-tint: var(--ion-color-two-tint);
 }
 
-.ion-color-three {
+.ion-color-tier3 {
   --ion-color-base: var(--ion-color-three);
   --ion-color-base-rgb: var(--ion-color-three-rgb);
   --ion-color-contrast: var(--ion-color-three-contrast);
@@ -137,7 +137,7 @@
   --ion-color-tint: var(--ion-color-three-tint);
 }
 
-.ion-color-four {
+.ion-color-tier4 {
   --ion-color-base: var(--ion-color-four);
   --ion-color-base-rgb: var(--ion-color-four-rgb);
   --ion-color-contrast: var(--ion-color-four-contrast);
@@ -146,7 +146,7 @@
   --ion-color-tint: var(--ion-color-four-tint);
 }
 
-.ion-color-five {
+.ion-color-tier5 {
   --ion-color-base: var(--ion-color-five);
   --ion-color-base-rgb: var(--ion-color-five-rgb);
   --ion-color-contrast: var(--ion-color-five-contrast);
@@ -155,7 +155,7 @@
   --ion-color-tint: var(--ion-color-five-tint);
 }
 
-.ion-color-six {
+.ion-color-tier6 {
   --ion-color-base: var(--ion-color-six);
   --ion-color-base-rgb: var(--ion-color-six-rgb);
   --ion-color-contrast: var(--ion-color-six-contrast);
@@ -164,7 +164,7 @@
   --ion-color-tint: var(--ion-color-six-tint);
 }
 
-.ion-color-seven {
+.ion-color-tier7 {
   --ion-color-base: var(--ion-color-seven);
   --ion-color-base-rgb: var(--ion-color-seven-rgb);
   --ion-color-contrast: var(--ion-color-seven-contrast);
@@ -376,12 +376,12 @@
   --ion-color-def-shade: #712ac2;
   --ion-color-def-tint: #8d45e0;
 
-  --ion-color-k: #e8e8e8;
-  --ion-color-k-rgb: 232, 232, 232;
-  --ion-color-k-contrast: #000000;
-  --ion-color-k-contrast-rgb: 0, 0, 0;
-  --ion-color-k-shade: #cccccc;
-  --ion-color-k-tint: #eaeaea;
+  --ion-color-k: #606060;
+  --ion-color-k-rgb: 96, 96, 96;
+  --ion-color-k-contrast: #ffffff;
+  --ion-color-k-contrast-rgb: 255, 255, 255;
+  --ion-color-k-shade: #545454;
+  --ion-color-k-tint: #707070;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -398,12 +398,12 @@
     --ion-color-primary-shade: #3a7be0;
     --ion-color-primary-tint: #5598ff;
 
-    --ion-color-secondary: #50c8ff;
-    --ion-color-secondary-rgb: 80, 200, 255;
-    --ion-color-secondary-contrast: #ffffff;
-    --ion-color-secondary-contrast-rgb: 255, 255, 255;
-    --ion-color-secondary-shade: #46b0e0;
-    --ion-color-secondary-tint: #62ceff;
+    --ion-color-secondary: #e668ac;
+    --ion-color-secondary-rgb: 230, 104, 172;
+    --ion-color-secondary-contrast: #000000;
+    --ion-color-secondary-contrast-rgb: 0, 0, 0;
+    --ion-color-secondary-shade: #ca5c97;
+    --ion-color-secondary-tint: #e977b4;
 
     --ion-color-tertiary: #6a64ff;
     --ion-color-tertiary-rgb: 106, 100, 255;
@@ -461,7 +461,7 @@
    */
 
   .ios body {
-    --ion-background-color: #151920;
+    --ion-background-color: #151922;
     --ion-background-color-rgb: 21, 25, 32;
 
     --ion-text-color: #fcfefe;
@@ -489,9 +489,9 @@
 
     --ion-toolbar-background: #151920;
 
-    --ion-item-background: #21242b;
+    --ion-item-background: #21222b;
 
-    --ion-card-background: #21242b;
+    --ion-card-background: #21222b;
   }
 
   /*
@@ -500,7 +500,7 @@
    */
 
   .md body {
-    --ion-background-color: #151920;
+    --ion-background-color: #151922;
     --ion-background-color-rgb: 21, 25, 32;
 
     --ion-text-color: #fcfefe;

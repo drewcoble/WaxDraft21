@@ -1,0 +1,295 @@
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-color-six);
+    opacity: 0.975;
+    position: absolute;
+    top: 0px;
+    height: 65px;
+    padding-top: 20px;
+
+    ion-row {
+      ion-col {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .league-name {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}
+ion-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  ion-grid {
+    height: 100%;
+    padding: 0;
+
+    .roster-view-row {
+      height: 100%;
+      padding-top: 70px;
+      padding-bottom: 90px;
+
+      .position-labels {
+        z-index: 99;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.025);
+        padding-top: 45px;
+        box-shadow: 5px 0 10px -6px rgba(0, 0, 0, 0.5),
+          -5px 0 10px -6px rgba(0, 0, 0, 0.5);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        ion-badge {
+          height: 32px;
+          margin: 31px auto 43px;
+          padding: auto 2px;
+          min-width: 95%;
+          max-width: 100%;
+          border-radius: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 70%;
+          letter-spacing: 1px;
+          color: #21242b;
+          opacity: 0.9;
+          //   border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+      }
+
+      ion-col {
+        max-width: 50%;
+        display: flex;
+        justify-content: center;
+
+        .my-team-slides {
+          margin: 0;
+        }
+
+        .league-teams-slides {
+          //   border: 1px solid gray;
+        }
+
+        ion-slides {
+          margin: 0;
+          height: 100%;
+          width: 100%;
+          //   padding-top: 70px;
+
+          .swiper-slide-prev,
+          .swiper-slide-next {
+            ion-card {
+              transform: scale(0.975) !important;
+            }
+          }
+
+          .swiper-slide-active {
+            ion-card {
+              transform: scale(1.02) !important;
+            }
+          }
+
+          ion-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            // background-color: #909090;
+
+            .team-header {
+              height: 40px;
+              min-height: 40px;
+              max-height: 40px;
+              width: 100%;
+              padding: 0 4px;
+              overflow-x: hidden;
+              text-overflow: ellipsis !important;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .team-name {
+                //   background-color: #303030;
+                margin: 0 auto;
+                padding: 0;
+                height: 40px;
+                line-height: 20px;
+                max-width: 120px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-x: hidden !important;
+                text-overflow: ellipsis !important;
+                font-size: 80%;
+              }
+            }
+
+            ion-card {
+              width: 100%;
+              margin: 6px auto;
+              height: 94px;
+              border-radius: 12px;
+              border: 2px solid #262a34;
+              font-size: 10px;
+
+              /*ion-card-header {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                height: 30%;
+              }*/
+
+              ion-card-content {
+                padding: 0;
+                height: 100%;
+                font-size: 10px;
+
+                ion-grid {
+                  height: 100%;
+                  padding: 0;
+
+                  .top-row {
+                    height: 13px;
+                    padding-top: 1px;
+                    overflow: hidden !important;
+
+                    .pick-num {
+                      border-radius: 0 0 4px 0;
+                      margin-left: 0;
+                      font-size: 9.5px;
+                      // background-color: #e8e8e8;
+                      // color: #21242b !important;
+                      padding: 0.5px 0 0 0.5px;
+                      font-weight: 700 !important;
+                    }
+
+                    ion-col {
+                      height: 13px;
+                    }
+                  }
+
+                  .player-name {
+                    padding: 0 3px;
+                    height: 26px;
+                    line-height: 13px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+
+                  .player-img-div {
+                    height: 26px;
+                    position: relative;
+                    padding: 0 4px;
+
+                    .player-info-wrapper {
+                      width: calc(50% - 5px);
+                      position: absolute;
+                      top: 0;
+                      right: 0;
+                      color: #e8e8e8;
+                      line-height: 13px;
+
+                      .player-info {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        letter-spacing: 0.5px;
+                      }
+                    }
+
+                    .bg-div {
+                      height: 26px;
+                      width: 100%;
+                      padding: 2px 0 0;
+                      border-radius: 8px;
+                      opacity: 0.65;
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                    }
+
+                    ion-img {
+                      // height: 26px;
+                      // width: auto;
+                      width: 36px;
+                      height: 26px;
+                      position: absolute;
+                      top: 0;
+                      left: 5px;
+                    }
+
+                    ion-text {
+                      height: 100%;
+                      width: 100%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      font-size: 11px;
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                    }
+                  }
+
+                  .team-col {
+                    height: 15px;
+                    width: 53.33px;
+                    font-size: 8px;
+                    font-style: italic;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                    white-space: nowrap !important;
+                    padding: 0;
+                    padding-top: 1px;
+
+                    ::shadow {
+                      color: #e8e8e8;
+                      overflow: hidden !important;
+                      white-space: nowrap !important;
+                      text-overflow: ellipsis !important;
+                    }
+                  }
+
+                  .player-tier-row {
+                    height: 14px;
+                    border-radius: 6px;
+                    font-weight: 700;
+                    letter-spacing: 3px;
+                    border: 0.5px solid rgba(200, 200, 205, 0.25);
+
+                    .player-tier-col {
+                      height: 13px;
+                      line-height: 13px;
+                    }
+                  }
+
+                  ion-row {
+                    ion-col {
+                      padding: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

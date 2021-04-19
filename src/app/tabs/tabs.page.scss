@@ -1,6 +1,6 @@
 ion-tab-bar {
   --background: var(--ion-color-six);
-  width: 95%;
+  width: 90%;
   position: absolute;
   bottom: 0px;
   border: none;
@@ -9,6 +9,7 @@ ion-tab-bar {
   align-self: center;
   border-radius: 12px 12px;
   opacity: 0.975;
-  height: 50px;
+  height: 40px;
   padding: 10px 10px 25px;
+  // padding: 10px;
 }

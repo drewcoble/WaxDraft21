@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" class='ion-no-border'>
-  <ion-toolbar>
+<ion-header [translucent]="false" class='ion-no-border'>
+  <ion-toolbar mode="ios">
     <ion-title>League name</ion-title>
     <ion-chip *ngIf='!auth.user' slot='end' (click)='auth.login()'>
       Sign In
@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   
 
-<ion-slides [options]='slideOpts' class='ion-padding-horizontal' mode='ios'>
+<ion-slides [options]='slideOpts' class='ion-padding-horizontal draft-picks-slides' mode='ios'>
 
   <!-- Start of slide to display round # 
   <ion-slide class='ion-no-padding'>
@@ -27,23 +27,77 @@
    End of slide to display round # -->
 
   <ion-slide *ngFor='let team of teams; index as idx;' class='ion-no-padding'>
-    <h6 class='team-name ion-text-wrap'>{{team.name}}</h6>
 
+    <h6 class='team-name'>{{team.name}}</h6>
 
     <div class='draft-picks-div' *ngFor='let pick of team.picks; index as pickIdx;'>
-      <ion-card [style.borderColor]="pService.getBorderColor('RB')">
-        <ion-card-header *ngIf='pick.player == 0'>
-          <ion-card-subtitle>{{pickIdx+1}}.{{calcPickNumber(team.pick, pickIdx+1)}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-header *ngIf='pick.player != 0'>
-          <ion-text size='small'>{{pickIdx+1}}.{{pick.pick}}</ion-text>
-          <ion-card-subtitle>{{pick.player}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content class='ion-align-items-end'>
-          <span *ngIf='pick.team != team.teamID'>{{pick.team}}</span>
+      <ion-card [class.active]='pick.player == "active"'>
+        
+        <!-- card content -->
+        <ion-card-content class='draft-pick-content'>
+          <ion-grid>
+            <!-- player info (top row) -->
+            <ion-row class='dp-top-row'>
+              <ion-col size="4" class='pick-num'>
+                {{pickIdx+1}}.{{calcPickNumber(team.pick, pickIdx+1)}}
+              </ion-col>
+              <!-- 2 spacer columns -->
+              <ion-col></ion-col>
+              <ion-col></ion-col>
+              <ion-col size='8' class='dp-team-col ion-text-nowrap'  *ngIf="pick.team != team.teamID">
+                | {{ pick.team }}
+              </ion-col>
+              <!-- <ion-col>{{ pick.player.position }}</ion-col>
+              <ion-col>{{ pick.player.team }}</ion-col> -->
+            </ion-row>
+            <!-- player name (row two) -->
+            <!-- <ion-row class='player-name'  [ngStyle]="{'height': (pick.team==team.teamID) ? '41px' : '26px'}"> -->
+            <ion-row class='player-name' [ngStyle]="{'height': (pick.team==team.teamID) ? '36px' : '36px'}">
+              <ion-col size='12'>
+                {{ pick.player.name }}
+              </ion-col>
+            </ion-row>
+            <!-- player image -->
+            <ion-row class='player-img-div'>
+              <ion-col size='12'>
+                <div class="bg-div" [style.backgroundColor]="pService.getBorderColor(pick.player.position)"></div>
+                
+                <div *ngIf='pick.player=="active"' class="bg-div" [style.backgroundColor]="pService.getBorderColor(pick.player)"></div>
+                
+                <ion-text color='light' *ngIf='pick.player=="active"'>On the clock</ion-text>
+                
+                <ion-img *ngIf='pick.player && pick.player != "active"' src="/assets/images/players/{{pick.player.playerID}}.png">
+                </ion-img>
+
+                <div class="player-info-wrapper" *ngIf='pick.player && pick.player != "active"'>
+                  <div class="player-info">{{pick.player.position}}</div>
+                  <div class="player-info">{{pick.player.team}}</div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <!-- team who owns pick (bottom row) -->
+            <!-- <ion-row class='dp-team-row'  *ngIf="pick.team != team.teamID">
+              <ion-col size='12'>
+                {{ pick.team }}
+              </ion-col>
+            </ion-row> -->
+          </ion-grid>
         </ion-card-content>
       </ion-card>
     </div>
+
+    <!-- SPACER CARD AT BOTTOM OF SLIDE -->
+    <div class='draft-picks-div'>
+    <ion-card style='border: 2px solid #e8e8e8; opacity: 0;'>
+      <ion-card-header>
+        card
+      </ion-card-header>
+      <ion-card-content>
+        content
+      </ion-card-content>
+    </ion-card>
+    </div>
+    <!-- END OF SPACER CARD -->
 
   </ion-slide>
 

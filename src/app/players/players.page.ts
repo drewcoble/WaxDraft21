@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponentPage } from '../popover-component/popover-component.page';
+import { AppComponent } from '../app.component';
 
 // import { PopoverController } from '@ionic/angular';
 // import { PopoverComponent } from '../../component/popover/popover.component';
@@ -52,32 +53,35 @@ export class PlayersPage implements OnInit {
     private storage: Storage,
     public toastCtrl: ToastController,
     public pService: PlayersService,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    public app: AppComponent
   ) {
     
   }
 
   ngOnInit() {
-    // this.pService.makeTestCall().subscribe(players => (this.testPlayers = players));
-
     if (!this.isUser
        //&& !this.newUser
        ) {
       // this.signInToast();
     }
 
+    // GET all players from firestore (through the players service)
+    // let players = this.pService.getAllPlayers();
+    // console.log(players);
+    // this.players = [];
+    // players.forEach((doc)=> {
+    //   // console.log("Doc: ", doc);
+    //   doc.forEach((player)=> {
+    //     // console.log(player);
+    //     if (!this.players.includes(player))
+    //     this.players.push(player);
+    //   })
+    // })
   }
 
   ionViewWillEnter() {
-    let players = this.pService.getAllPlayers();
-    // console.log(players);
-    this.players = [];
-    players.forEach((doc)=> {
-      doc.forEach((player)=> {
-        // console.log(player);
-        this.players.push(player);
-      })
-    })
+    
   }
 
   async presentPopover(ev: any) {

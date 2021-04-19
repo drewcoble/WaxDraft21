@@ -25,8 +25,6 @@ import { environment } from '../environments/environment';
 //native storage
 import { IonicStorageModule } from '@ionic/storage';
 
-import { HeaderComponentModule } from './header/header.module';
-
 
 
 @NgModule({
