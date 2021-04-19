@@ -94,6 +94,10 @@ export class TeamsPage implements OnInit {
       })      
     })
   }
+
+  resetDraft():void {
+    
+  }
   
 
 }

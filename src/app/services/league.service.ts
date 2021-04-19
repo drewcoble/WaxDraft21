@@ -14,6 +14,7 @@ export class LeagueService {
   public league: Observable<League>;
   public leagueSettings = {
     'positions': {},
+    'rounds': 15,
   }
 
   //wax museum league id for testing

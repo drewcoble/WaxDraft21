@@ -33,7 +33,7 @@ export class DraftBoardPage implements OnInit {
 
   ionViewWillEnter() {
     let teams = this.tService.getTeams();
-    // console.log(teams);
+    
     
     teams.forEach((doc) => {
       this.teams = [];
