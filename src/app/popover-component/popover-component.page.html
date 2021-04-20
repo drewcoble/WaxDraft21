@@ -1,4 +1,22 @@
 <ion-content class='ion-padding'>
-  <ion-text>popover component</ion-text>
-  <ion-button color='primary' (click)='closePopover()'>Cool</ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>Pick ??</ion-col>
+      <ion-col>Team ??</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-text>Draft {{player.data.name}}?</ion-text>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+  
+  <ion-button color='rb' (click)='closePopover()'>
+    Draft
+  </ion-button>
+  <ion-button color='qb' (click)='closePopover()'>
+    Cancel
+  </ion-button>
 </ion-content>

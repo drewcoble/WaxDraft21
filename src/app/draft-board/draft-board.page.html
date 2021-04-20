@@ -26,7 +26,7 @@
   </ion-slide>
    End of slide to display round # -->
 
-  <ion-slide *ngFor='let team of teams; index as idx;' class='ion-no-padding'>
+  <ion-slide *ngFor='let team of app.allTeams; index as idx;' class='ion-no-padding'>
 
     <h6 class='team-name'>{{team.name}}</h6>
 
@@ -116,5 +116,12 @@
 
 
 </ion-slides>
+
+<!-- fab placed to the bottom end
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" style="margin-bottom: 75px;">
+  <ion-fab-button (click)="tService.resetDraft()">
+    <ion-text>Reset<br>Draft</ion-text>
+  </ion-fab-button>
+</ion-fab> -->
 
 </ion-content>

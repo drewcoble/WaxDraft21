@@ -24,6 +24,7 @@ export class TeamsService {
     this.teams = this.teamsCollection.valueChanges(
       {idField:'teamID'}
     );
+    
     // console.log(this.players);
     // this.players.forEach((doc)=> {
       // console.log(doc);
@@ -35,7 +36,12 @@ export class TeamsService {
   }
 
   resetDraft():void {
+    console.log('Reset Draft Clicked');
+
     this.teams.forEach((doc)=>{
+      // console.log(doc);
+      let leagueTeams = [];
+
       doc.forEach((team)=>{
         let teamPicks = [];
         
@@ -45,10 +51,11 @@ export class TeamsService {
             'team': team.teamID
           }; 
         }
-        let thisTeamDoc = this.afs.doc(`Leagues/${this.leagueID}/teams/${team.teamID}`);
-        thisTeamDoc.update({
-          'picks': teamPicks,
-        });
+
+        // let thisTeamDoc = this.afs.doc(`Leagues/${this.leagueID}/teams/${team.teamID}`);
+        // thisTeamDoc.update({
+        //   'picks': teamPicks,
+        // });
       })
     })
   }

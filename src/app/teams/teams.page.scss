@@ -51,7 +51,7 @@ ion-content {
 
         ion-badge {
           height: 32px;
-          margin: 31px auto 43px;
+          margin: 21px auto 33px;
           padding: auto 2px;
           min-width: 95%;
           max-width: 100%;
@@ -138,7 +138,7 @@ ion-content {
             ion-card {
               width: 100%;
               margin: 6px auto;
-              height: 94px;
+              height: 74px;
               border-radius: 12px;
               border: 2px solid #262a34;
               font-size: 10px;
@@ -267,6 +267,7 @@ ion-content {
                   }
 
                   .player-tier-row {
+                    margin: 0 4px;
                     height: 14px;
                     border-radius: 6px;
                     font-weight: 700;

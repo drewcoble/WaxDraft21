@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 import { AuthService } from '../services/auth.service';
+import { LeagueService } from '../services/league.service';
 import { PlayersService } from '../services/players.service';
 import { TeamsService } from '../services/teams.service';
 
@@ -9,14 +11,7 @@ import { TeamsService } from '../services/teams.service';
   styleUrls: ['./draft-board.page.scss'],
 })
 export class DraftBoardPage implements OnInit {
-
-  constructor(
-    public pService: PlayersService,
-    public tService: TeamsService,
-    public auth: AuthService,
-  ) {
-  }
-
+  
   slideOpts = {
     initialSlide: 0,
     direction: 'horizontal',
@@ -27,32 +22,37 @@ export class DraftBoardPage implements OnInit {
     loop: false
   };
 
-  ngOnInit() {
+  public teams;
 
+  constructor(
+    public pService: PlayersService,
+    public tService: TeamsService,
+    public lService: LeagueService,
+    public auth: AuthService,
+    public app: AppComponent
+  ) {
+  }
+
+  ngOnInit() {
+    
   }
 
   ionViewWillEnter() {
-    let teams = this.tService.getTeams();
+    // console.log(this.lService.teams);
+    // let teamsDocs = this.lService.getTeams();
     
-    
-    teams.forEach((doc) => {
-      this.teams = [];
-      doc.forEach((team)=> {
-        this.teams.push(team);
-      })      
-    })
-    console.log(this.teams);  
+    // teamsDocs.forEach((doc) => {
+    //   this.teams = [];
+    //   doc.forEach((team)=> {
+    //     this.teams.push(team);
+    //   })      
+    // })
   }
 
   ionViewDidEnter() {
-    
+    // console.log(this.app.allTeams);  
   }
 
-  draftSettings = {
-    numRounds: 15
-  };
-
-  teams = [];
 
   calcPickNumber(draftSlot, draftRound):number {
     if (draftRound%2 == 0) {

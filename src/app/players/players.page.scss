@@ -42,14 +42,14 @@ ion-header {
 
   .swiper-zoom-container {
     ion-card {
-      transform: scale(0.975) !important;
+      // transform: scale(0.975) !important;
     }
   }
 
   .swiper-slide-active,
   .swiper-slide-next {
     ion-card {
-      transform: scale(1.02) !important;
+      // transform: scale(1.02) !important;
     }
   }
 

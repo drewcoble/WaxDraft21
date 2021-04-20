@@ -2,8 +2,8 @@
   <ion-toolbar mode="ios">
     <ion-row style='height: 44px'>
       <ion-col class='league-name ion-text-wrap' style='height: 44px;' size='8'>
-        {{ (lService.league | async).name}}
-        <ion-icon name='arrow-down'></ion-icon>
+        {{ (lService.league | async)?.name }}
+        <!-- <ion-icon name='arrow-down'></ion-icon> -->
       </ion-col>
       <ion-col style='height: 44px;' size='4'>
         <ion-chip *ngIf='!auth.user'  (click)='auth.login()'>
@@ -27,7 +27,7 @@
           <ion-slide>
 
             <div class="team-header">
-              <h4 class='team-name'>My Team</h4>
+              <h4 class='team-name'>{{app.myTeam.manager}}</h4>
             </div>
             
 
@@ -39,7 +39,7 @@
 
             
               <ion-card 
-                *ngFor='let player of myTeam.roster["QB"]'
+                *ngFor='let player of app.myTeam.roster["QB"]'
               >
                 
                 <ion-card-content>
@@ -139,239 +139,30 @@
 
 
 
+          
+            <ion-slide *ngFor="let team of app.leagueTeams">
+              
 
-          <ion-slide>
-            <div class="team-header">
-              <h4 class='team-name'>Other Team 1</h4>
-            </div>
+              <div class="team-header">
+                <h4 class='team-name'>{{team.manager}}</h4>
+              </div>
+              
+              <ion-card>
+                <ion-card-header>
+                  header
+                </ion-card-header>
+                <ion-card-content>
+                  content
+                </ion-card-content>
+              </ion-card>
+
             
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-          </ion-slide>
-          <ion-slide>
-            <div class="team-header">
-              <h4 class='team-name'>Other Team 2222</h4>
-            </div>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-          </ion-slide>
-          <ion-slide>
-            <div class="team-header">
-              <h4 class='team-name'>YoungHamstringInjury</h4>
-            </div>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-            <ion-card>
-              <ion-card-header>
-                header
-              </ion-card-header>
-              <ion-card-content>
-                content
-              </ion-card-content>
-            </ion-card>
-          </ion-slide>
+            </ion-slide>
+          
+
+
+
+          
         </ion-slides>
       </ion-col>
       <!-- END RIGHT SIDE -->

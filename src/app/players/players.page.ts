@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { PopoverComponentPage } from '../popover-component/popover-component.page';
 import { AppComponent } from '../app.component';
+import { LeagueService } from '../services/league.service';
 
 // import { PopoverController } from '@ionic/angular';
 // import { PopoverComponent } from '../../component/popover/popover.component';
@@ -53,6 +54,7 @@ export class PlayersPage implements OnInit {
     private storage: Storage,
     public toastCtrl: ToastController,
     public pService: PlayersService,
+    public lService: LeagueService,
     public popoverController: PopoverController,
     public app: AppComponent
   ) {
@@ -84,11 +86,14 @@ export class PlayersPage implements OnInit {
     
   }
 
-  async presentPopover(ev: any) {
+  async presentPopover(ev: any, player) {
     const popover = await this.popoverController.create({
       component: PopoverComponentPage,
+      componentProps: {
+        'player': player,
+      },
       cssClass: 'my-custom-class',
-      event: ev,
+      // event: ev,
       translucent: true
     });
     return await popover.present();
@@ -136,12 +141,10 @@ export class PlayersPage implements OnInit {
     this.signInToast();
   }
 
-  draftPlayer(playerID):void {
-    alert("Draft " + playerID + "?");
-  }
-
-  flipCard(playerID) {
-    // app = document.getElementById("app");
+  draftPlayer(player):void {
+    // console.log(player);
+    // alert("Draft " + player.data.name + "?");
+    this.presentPopover('click', player);
   }
   
 

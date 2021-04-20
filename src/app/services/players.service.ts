@@ -58,15 +58,16 @@ export class PlayersService {
     }
   }
 
+
   getTierColor(tier):string {
     if (tier == 1) {
-      return "#fafbfc";
+      return "#fdfeff";
     }
     else if (tier == 2) {
-      return "#c4c8d1";
+      return "#c4c9d2";
     }
     else if (tier == 3) {
-      return "#9399a8";
+      return "#9399a9";
     }
     else if (tier == 4) {
       return "#636b7e";
@@ -83,6 +84,6 @@ export class PlayersService {
     else {
       return "";
     }
-  }
+  } 
   
 }

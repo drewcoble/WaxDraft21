@@ -1,3 +1,5 @@
+import { Team } from "./team";
+
 export interface League {
     leagueID?: string;
     name?: string;
@@ -11,5 +13,8 @@ export interface League {
         DEF: number,
         K: number,
         B: number
-    }
+    },
+    // try to put collections here...
+    teams?: Team[];
+    draft?: any
 }

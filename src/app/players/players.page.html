@@ -5,10 +5,10 @@
     <ion-chip slot='end'>
       <ion-icon color='dark' name='filter' style='margin: 0;'></ion-icon>
     </ion-chip>
-    <ion-chip *ngIf='!auth.user' slot='end' (click)='presentPopover("beans")'>
+    <ion-chip *ngIf='!auth.user' slot='end'>
       Sign In
     </ion-chip>
-    <ion-chip *ngIf='auth.user' slot='end' (click)='presentPopover("beans")'>
+    <ion-chip *ngIf='auth.user' slot='end'>
       User
     </ion-chip>
   </ion-toolbar>
@@ -54,8 +54,8 @@
           [color]='"tier" + player.data.tier' 
           [style.borderColor]="pService.getBorderColor(player.data.position)"
         > -->
-        <ion-card [id]='player.data.playerID' *ngIf='player.data.position == position && player.drafted == false'
-          (click)="flipCard(player.data.playerID)"
+        <ion-card [id]='player.data.playerID' *ngIf='player.data.position == position && !lService.draftedPlayers.includes(player.data.playerID)'
+          (click)="draftPlayer(player)"
           >
           <ion-card-content class='ion-no-padding'>
 
