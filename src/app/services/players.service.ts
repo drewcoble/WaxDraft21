@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 // import { Observable, throwError } from 'rxjs';
 // import { catchError, retry } from 'rxjs/operators';
 import { Component } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
+// import { map, take } from 'rxjs/operators';
 
-// export interface Player { name: string; }
+import { Player } from '../interfaces/player';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +16,73 @@ import { Observable } from 'rxjs';
 export class PlayersService {
 
   private playersCollection: AngularFirestoreCollection;
-  players: Observable<Array<any>>;
+  private playersSubscription;
+  public players: Player[];
+
+  public sortField = 'adp';
   
   constructor(
     private afs: AngularFirestore,
     public storage: Storage
   ) {
-    this.playersCollection = afs.collection('Players', ref => ref.orderBy('adp', 'asc'));
-    this.players = this.playersCollection.valueChanges(
+    this.initPlayers();
+  }
+
+  initPlayers() {
+    this.playersCollection = this.afs.collection('Players', ref => ref.orderBy('adp', 'asc'));
+
+    /****** OBSERVING PLAYERS COLLECTION REFERENCE ******/
+
+    this.playersSubscription = this.playersCollection.valueChanges(
       {idField:"playerID"}
-    )
+    ).subscribe((data)=>{
+      this.players = data;
+    })
+    /****************************************************/
+  }
+
+  unsubPlayers() {
+    this.playersSubscription.unsubscribe();
+  }
+
+  resortPlayersData():void {
+    let sortDir;
+
+    //set the new sort field and sort direction
+    if (this.sortField == 'adp') {
+      this.sortField = 'tier';
+      sortDir = 'asc';
+    }
+    else if (this.sortField == 'tier') {
+      this.sortField = 'ppg20';
+      sortDir = 'desc';
+    }
+    else if (this.sortField == 'ppg20') {
+      this.sortField = 'ppg21';
+      sortDir = 'desc';
+    }
+    else if (this.sortField == 'ppg21') {
+      this.sortField = 'adp';
+      sortDir = 'asc';
+    }
+
+    // unsubscribe to previous players subscription
+    this.playersSubscription.unsubscribe();
+    //get a new reference with the new sort value & sort direction
+    this.playersCollection = this.afs.collection('Players', ref => ref.orderBy(this.sortField, sortDir));
+    // subscribe to the new players reference
+    this.playersCollection.valueChanges(
+      {idField:"playerID"}
+    ).subscribe((data)=>{
+      this.players = data;
+    })
   }
 
   getAllPlayers():any {
     return this.players;
   }
 
-  getBorderColor(position):string {
+  getPositionColor(position):string {
     if (position == "QB") {
       return "#ff4141";
     }
@@ -54,7 +105,7 @@ export class PlayersService {
       return "#e8e8e8"
     }
     else {
-      return "#21242b"
+      return "#212424"
     }
   }
 

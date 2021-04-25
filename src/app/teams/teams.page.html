@@ -1,11 +1,10 @@
 <ion-header [translucent]="false" class='ion-no-border'>
   <ion-toolbar mode="ios">
     <ion-row style='height: 44px'>
-      <ion-col class='league-name ion-text-wrap' style='height: 44px;' size='8'>
-        {{ (lService.league | async)?.name }}
-        <!-- <ion-icon name='arrow-down'></ion-icon> -->
+      <ion-col class='app-name' style='height: 44px;' size='8'>
+        WaxDraft&nbsp;<span style="color: #e668ac">21</span>
       </ion-col>
-      <ion-col style='height: 44px;' size='4'>
+      <ion-col style='height: 44px;' size='4' class='right-side'>
         <ion-chip *ngIf='!auth.user'  (click)='auth.login()'>
           Sign In
         </ion-chip>
@@ -17,42 +16,30 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" no-bounce mode="ios">
 
-  <ion-grid>
+  <ion-grid mode="ios">
     <ion-row class='roster-view-row'>
       <!-- LEFT SIDE | ONE slide for 'my team' -->
       <ion-col class='ion-no-padding' size='5'>
-        <ion-slides class='my-team-slides' [options]='myTeamSlideOpts'>
-          <ion-slide>
+        <ion-slides class='my-team-slides' [options]='myTeamSlideOpts' mode="ios">
 
-            <div class="team-header">
-              <h4 class='team-name'>{{app.myTeam.manager}}</h4>
-            </div>
-            
+          <ion-slide class="my-team-div" *ngFor="let team of lService.teams" [ngStyle]="(team.teamID != lService.myTeamID) && {'display': 'none'}">
 
-            <!-- start ngFor loop for team positions -->
-            <!-- <div *ngFor='let position of myTeam.roster | keyvalue'>
-              roster position | {{position.key}}
-            </div> -->
-            <!-- end ngFor loop for team positions -->
-
-            
+              <div class="team-header">
+                <h4 class='team-name'>{{team.manager}}</h4>
+              </div>
+              
+              <!-- Loop thru a card for the QB position -->
               <ion-card 
-                *ngFor='let player of app.myTeam.roster["QB"]'
+                *ngFor='let player of team.roster["QB"]'
               >
-                
                 <ion-card-content>
                   <ion-grid>
-                    <ion-row>
-                      <ion-col size='12'>
-                        {{player.name}}
-                      </ion-col>
-                    </ion-row>
-                    
-                      <ion-row class='player-img-div'>
+
+                    <ion-row class='player-img-div'>
                         <ion-col size='12'>
-                          <div class="bg-div" [style.backgroundColor]="pService.getBorderColor(player.position)"></div>
+                          <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
                       
                           <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
                           </ion-img>
@@ -63,30 +50,350 @@
                           </div>
                         </ion-col>
                       </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+                    
+                      
                       <!-- start of player tier  -->
                       <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
-                        [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}">
+                        [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
                         <ion-col class='player-tier-col' size='12'>
                           <ion-text>TIER {{player.tier}}</ion-text>
                         </ion-col>
-                      
                       </ion-row>
                     
                   </ion-grid>
                   
                 </ion-card-content>
               </ion-card>
-            
-            
-            <ion-card style='opacity: 0.2;'>
-              <ion-card-header>
-                spacer
-              </ion-card-header>
-              <ion-card-content>
-                card
-              </ion-card-content>
-            </ion-card>
+              
+              <!-- Loop thru a card for the RB position -->
+              <ion-card *ngFor='let player of team.roster["RB"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
 
+              <!-- Loop thru a card for the WR position -->
+              <ion-card *ngFor='let player of team.roster["WR"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the TE position -->
+              <ion-card *ngFor='let player of team.roster["TE"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the QRWT position -->
+              <ion-card *ngFor='let player of team.roster["QRWT"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the RWT position -->
+              <ion-card *ngFor='let player of team.roster["RWT"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the DEF position -->
+              <ion-card *ngFor='let player of team.roster["DEF"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the K position -->
+              <ion-card *ngFor='let player of team.roster["K"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+
+              <!-- Loop thru a card for the B position -->
+              <ion-card *ngFor='let player of team.roster["B"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              
+              <!-- START invisible spacer card at bottom -->
+              <ion-card style='opacity: 0;'>
+                <ion-card-header>
+                  spacer
+                </ion-card-header>
+                <ion-card-content>
+                  card
+                </ion-card-content>
+              </ion-card>
+              <!-- END spacer card -->
+     
           </ion-slide>
         </ion-slides>
       </ion-col>
@@ -95,43 +402,44 @@
       <!-- MIDDLE SECTION | displays position label -->
       <ion-col size='2' class='position-labels'>
         
-        <ion-badge color='qb' *ngFor='let i of [].constructor(lService.leagueSettings.positions["QB"])'>
+        <ion-badge color='qb' *ngFor='let i of [].constructor(lService.league.positions["QB"])'>
           QB
         </ion-badge>
         
-        <ion-badge color='rb'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["RB"])'>
+        <ion-badge color='rb'  *ngFor='let i of [].constructor(lService.league.positions["RB"])'>
           RB
         </ion-badge>
        
-        <ion-badge color='wr'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["WR"])'>
+        <ion-badge color='wr'  *ngFor='let i of [].constructor(lService.league.positions["WR"])'>
           WR
         </ion-badge>
         
-        <ion-badge color='te'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["TE"])'>
+        <ion-badge color='te'  *ngFor='let i of [].constructor(lService.league.positions["TE"])'>
           TE
         </ion-badge>
 
-        <ion-badge color='secondary' class='ion-text-wrap'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["QRWT"])'>
+        <ion-badge color='secondary' class='ion-text-wrap'  *ngFor='let i of [].constructor(lService.league.positions["QRWT"])'>
           Q R W T
         </ion-badge>
 
-        <ion-badge color='secondary'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["RWT"])'>
+        <ion-badge color='secondary'  *ngFor='let i of [].constructor(lService.league.positions["RWT"])'>
           R W <br>T
         </ion-badge>
 
-        <ion-badge color='def'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["DEF"])'>
+        <ion-badge color='def'  *ngFor='let i of [].constructor(lService.league.positions["DEF"])'>
           DEF
         </ion-badge>
 
-        <ion-badge color='k'  *ngFor='let i of [].constructor(lService.leagueSettings.positions["K"])'>
+        <ion-badge color='k'  *ngFor='let i of [].constructor(lService.league.positions["K"])'>
           K
         </ion-badge>
 
-        <ion-badge color='tertiary' *ngFor='let i of [].constructor(lService.leagueSettings.positions["B"])'>
-          B
+        <ion-badge color='medium' *ngFor='let i of [].constructor(lService.league.positions["B"])'>
+          bench
         </ion-badge>
       </ion-col>
       <!-- END MIDDLE SECTION -->
+
 
       <!-- RIGHT SIDE | slides for other teams in the league -->
       <ion-col class='ion-no-padding' size='5'>
@@ -140,19 +448,369 @@
 
 
           
-            <ion-slide *ngFor="let team of app.leagueTeams">
+            <ion-slide *ngFor="let team of lService.teams" [ngStyle]="(team.teamID == lService.myTeamID) && {'display': 'none'}" >
               
 
               <div class="team-header">
                 <h4 class='team-name'>{{team.manager}}</h4>
               </div>
+
+              <!-- Loop thru a card for the QB position -->
+              <ion-card *ngFor='let player of team.roster["QB"]'>
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
               
-              <ion-card>
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the RB position -->
+              <ion-card *ngFor='let player of team.roster["RB"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the WR position -->
+              <ion-card *ngFor='let player of team.roster["WR"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the TE position -->
+              <ion-card *ngFor='let player of team.roster["TE"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the QRWT position -->
+              <ion-card *ngFor='let player of team.roster["QRWT"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the RWT position -->
+              <ion-card *ngFor='let player of team.roster["RWT"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the DEF position -->
+              <ion-card *ngFor='let player of team.roster["DEF"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the K position -->
+              <ion-card *ngFor='let player of team.roster["K"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <!-- Loop thru a card for the B position -->
+              <ion-card *ngFor='let player of team.roster["B"]'>
+              
+                <ion-card-content>
+                  <ion-grid>
+                    <ion-row class='player-img-div'>
+                      <ion-col size='12'>
+                        <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(player.position)"></div>
+              
+                        <ion-img *ngIf='player.playerID' src="/assets/images/players/{{player.playerID}}.png">
+                        </ion-img>
+              
+                        <div class="player-info-wrapper" *ngIf='player'>
+                          <div class="player-info">{{player.position}}</div>
+                          <div class="player-info">{{player.team}}</div>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size='12'>
+                        {{player.name}}
+                      </ion-col>
+                    </ion-row>
+              
+              
+                    <!-- start of player tier  -->
+                    <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.tier)'
+                      [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}" *ngIf="player.tier">
+                      <ion-col class='player-tier-col' size='12'>
+                        <ion-text>TIER {{player.tier}}</ion-text>
+                      </ion-col>
+              
+                    </ion-row>
+              
+                  </ion-grid>
+              
+                </ion-card-content>
+              </ion-card>
+              
+              <ion-card style="opacity: 0">
                 <ion-card-header>
-                  header
+                  spacer
                 </ion-card-header>
                 <ion-card-content>
-                  content
+                  card
                 </ion-card-content>
               </ion-card>
 

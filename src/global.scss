@@ -33,8 +33,12 @@ ion-card {
 *::-webkit-scrollbar,
 ::-webkit-scrollbar,
 ion-scroll.scroll-y,
-.inner-scroll {
+.inner-scroll,
+.scroll-y,
+#background-content::-webkit-scrollbar,
+main {
   display: none;
+  margin-right: 0;
 }
 
 *,

@@ -1,161 +1,108 @@
-<ion-header [translucent]="false" class='ion-no-border'>
+<ion-header [translucent]="false" class="ion-no-border">
   <!-- <ion-title>WaxDraft 21</ion-title> -->
   <ion-toolbar mode="ios">
-    <ion-searchbar mode="ios" placeholder=''></ion-searchbar>
-    <ion-chip slot='end'>
-      <ion-icon color='dark' name='filter' style='margin: 0;'></ion-icon>
+    <ion-searchbar mode="ios" placeholder=""></ion-searchbar>
+    <ion-chip slot="end" (click)="pService.resortPlayersData()">
+      <ion-grid>
+        <ion-row style="font-size: 10px; letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.3); margin-bottom: 2px;">
+          <!-- <ion-icon color="dark" name="filter" style="margin: 0"></ion-icon> -->
+          SORT
+        </ion-row>
+        <ion-row style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">
+          {{pService.sortField}}
+        </ion-row>
+
+      </ion-grid>
     </ion-chip>
-    <ion-chip *ngIf='!auth.user' slot='end'>
-      Sign In
-    </ion-chip>
-    <ion-chip *ngIf='auth.user' slot='end'>
-      User
-    </ion-chip>
+    <ion-chip *ngIf="!auth.user" (click)='auth.login()' slot="end"> Sign In </ion-chip>
+    <ion-chip *ngIf="auth.user" (click)='auth.logout()' slot="end"> Sign Out </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" no-bounce>
+  <ion-title slot="start">Players</ion-title>
 
-  <!---
-    
-  <ion-slides class='intro-slides' [options]='welcomeSlideOpts' *ngIf='!newUser'>
-    <ion-slide>
-      <img src="assets/images/introSlides/slide1.jpg" alt="">
-    </ion-slide>
-    <ion-slide>
-      <img src="assets/images/introSlides/slide2.jpg" alt="">
-    </ion-slide>
-    <ion-slide>
-      <img src="assets/images/introSlides/slide3.jpg" alt="">
-    </ion-slide>
-    <ion-slide class='last-slide'>
-      <ion-button (click)='dismissIntro()'>Get Started</ion-button>
-    </ion-slide>
-  </ion-slides>
-
-  -->
-
-  <ion-title slot='start'>Players</ion-title>
-
-  <ion-slides [options]='slideOpts' class='ion-padding player-slides' mode='ios'>
-
+  <ion-slides
+    [options]="slideOpts"
+    class="ion-padding player-slides"
+    mode="ios"
+  >
     <!-- START POSITION SLIDES LOOP -->
-    <ion-slide *ngFor='let position of positions'>
-      <ion-text>{{position}}</ion-text> 
+    <ion-slide *ngFor="let position of positions; index as idx">
+      <ion-text>{{position}}</ion-text>
 
       <!-- START PLAYERS LOOP -->
-        <div *ngFor='let player of app.players'>
-
+      <div *ngFor="let player of pService.players">
         <!-- START PLAYER CARD -->
-        <!-- <ion-card 
-          [id]='player.data.playerID'
-          *ngIf='player.data.position == position && player.drafted == false' 
-          (click)="flipCard(player.data.playerID)" 
-          [color]='"tier" + player.data.tier' 
-          [style.borderColor]="pService.getBorderColor(player.data.position)"
-        > -->
-        <ion-card [id]='player.data.playerID' *ngIf='player.data.position == position && !lService.draftedPlayers.includes(player.data.playerID)'
-          (click)="draftPlayer(player)"
-          >
-          <ion-card-content class='ion-no-padding'>
 
+        <ion-card
+          [id]="player.playerID"
+          *ngIf="player.position == position && !lService.draftedPlayers.includes(player.playerID)"
+          (click)="draftPlayer(player)"
+        >
+          <ion-card-content class="ion-no-padding">
             <ion-grid>
               <!-- start row for player ADP and Bye Week -->
-              <ion-row class='player-adp-bye'>
-                <ion-col size="6">ADP: {{player.data.adp}}</ion-col>
-                <ion-col size="6">BYE: {{player.data.bye}}</ion-col>
+              <ion-row class="player-adp-bye">
+                <ion-col size="6" [style.color]="getAdpColor(player.adp)">ADP: {{player.adp}}</ion-col>
+                <ion-col size="6">BYE: {{player.bye}}</ion-col>
               </ion-row>
-              <ion-row class='player-info-row'>
-                <ion-col size='12'>
-                  <div class="bg-div" [style.backgroundColor]="pService.getBorderColor(player.data.position)"></div>
-              
-                  <ion-img src="/assets/images/players/{{player.data.image}}.png">
+              <ion-row class="player-info-row">
+                <ion-col size="12">
+                  <div
+                    class="bg-div"
+                    [style.backgroundColor]="pService.getPositionColor(player.position)"
+                  ></div>
+
+                  <ion-img src="/assets/images/players/{{player.playerID}}.png">
                   </ion-img>
-              
+
                   <div class="player-info-wrapper">
-                    <div class="player-info">{{player.data.team}}</div>
-                    <div class="player-info">{{player.data.position}}</div>
-                    <div class="player-name">
-                      {{ player.data.name }}
-                    </div>
+                    <div class="player-info">{{player.team}}</div>
+                    <div class="player-info">{{player.position}}</div>
+                    <div class="player-name">{{ player.name }}</div>
                   </div>
                 </ion-col>
               </ion-row>
 
-              
-              
               <!-- start card section of player stats -->
-              <ion-row class='stats-row' style='margin-top: 2px;'>
-                <ion-col size='12' style='justify-content: center;'>Stats & Projections</ion-col>
+              <ion-row class="stats-row" style="margin-top: 2px; line-height: 10px; height: 10px;">
+                <ion-col size="12" style="justify-content: center"
+                  >Points Per Game:</ion-col
+                >
               </ion-row>
-              <ion-row class='stats-row'>
-                <ion-col size='12'>2020: {{player.data.ppg20}} pts.</ion-col>
+              <ion-row class="stats-row">
+                <ion-col size="12">2020: {{player.ppg20}} pts.</ion-col>
               </ion-row>
-              <ion-row class='stats-row'>
-                <ion-col size='12'>2021: {{player.data.ppg21}} pts.</ion-col>
+              <ion-row class="stats-row">
+                <ion-col size="12">2021: {{player.ppg21}} pts. (proj.)</ion-col>
               </ion-row>
 
               <!-- start of player tier  -->
-              <ion-row class='player-tier-row' [style.backgroundColor]='pService.getTierColor(player.data.tier)'
-                [ngStyle]="{'color': (player.data.tier >= 4) ? '#e8e8e8' : '#080808'}">
-                <ion-col class='player-tier-col' size='12'>
-                  <ion-text>TIER {{player.data.tier}}</ion-text>
+              <ion-row
+                class="player-tier-row"
+                [style.backgroundColor]="pService.getTierColor(player.tier)"
+                [ngStyle]="{'color': (player.tier >= 4) ? '#e8e8e8' : '#080808'}"
+              >
+                <ion-col class="player-tier-col" size="12">
+                  <ion-text>TIER {{player.tier}}</ion-text>
                 </ion-col>
-              
               </ion-row>
-              
-
             </ion-grid>
-            
-
           </ion-card-content>
-
-          <!-- OLD CARD STYLES/CONTENT -->
-          <!-- 
-            <ion-card-header>
-              <ion-avatar>
-                <img src="/assets/images/players/{{player.data.image}}.png" alt="">
-              </ion-avatar>
-              <ion-card-subtitle class='ion-text-left'>{{player.data.name}}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content class='ion-no-padding'>
-            <div class='player-info'>
-              <b>{{player.data.position}} - {{player.data.team}}</b>
-              <ion-badge color='light'>Bye {{player.data.bye}}</ion-badge>
-            </div>
-            <div class="player-stats">
-              <div class="stats-left">
-                <p><b>2020:</b> {{player.data.ppg20}} pts.</p>
-                <p><b>2021:</b> {{player.data.ppg21}} pts.</p>
-              </div>
-              <div class="stats-right">
-                <div style='font-size: 80%;'>ADP</div>
-                <ion-badge 
-                [color]='player.data.adp < 13 ? "success" : "danger"'>
-                {{player.data.adp}}</ion-badge>
-              </div>
-            </div>
-          </ion-card-content> -->
         </ion-card>
         <!-- END PLAYER CARD -->
-        
       </div>
       <!-- END PLAYERS LOOP -->
-  
+
       <!-- SPACER CARD AT BOTTOM OF SLIDE -->
-      <ion-card style='min-height: 116px; border: none; opacity: 0;'>
-        <ion-card-header>
-          card
-        </ion-card-header>
-        <ion-card-content>
-          content
-        </ion-card-content>
+      <ion-card style="min-height: 116px; border: none; opacity: 0">
+        <ion-card-header> card </ion-card-header>
+        <ion-card-content> content </ion-card-content>
       </ion-card>
       <!-- END OF SPACER CARD -->
-
-    </ion-slide> 
+    </ion-slide>
     <!-- END POSITION SLIDES LOOP -->
-
   </ion-slides>
   <!-- <app-explore-container name="Players page"></app-explore-container> -->
 </ion-content>

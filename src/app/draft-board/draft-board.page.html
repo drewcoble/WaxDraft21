@@ -1,16 +1,24 @@
 <ion-header [translucent]="false" class='ion-no-border'>
   <ion-toolbar mode="ios">
-    <ion-title>League name</ion-title>
-    <ion-chip *ngIf='!auth.user' slot='end' (click)='auth.login()'>
-      Sign In
-    </ion-chip>
-    <ion-chip *ngIf='auth.user' slot='end' (click)='auth.logout()'>
-      Sign Out
-    </ion-chip>
+    <ion-row style='height: 44px'>
+      <ion-col class='app-name' style='height: 44px;' size='8'>
+        WaxDraft&nbsp;<span style="color: #e668ac">21</span>
+        <!-- {{ (lService.league | async)?.name }} -->
+        <!-- <ion-icon name='arrow-down'></ion-icon> -->
+      </ion-col>
+      <ion-col class='right-side' style='height: 44px;' size='4'>
+        <ion-chip *ngIf='!auth.user' (click)='auth.login()'>
+          Sign In
+        </ion-chip>
+        <ion-chip *ngIf='auth.user' (click)='auth.logout()'>
+          Sign Out
+        </ion-chip>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="false">
   
 
 <ion-slides [options]='slideOpts' class='ion-padding-horizontal draft-picks-slides' mode='ios'>
@@ -26,12 +34,12 @@
   </ion-slide>
    End of slide to display round # -->
 
-  <ion-slide *ngFor='let team of app.allTeams; index as idx;' class='ion-no-padding'>
+  <ion-slide *ngFor='let team of lService.teams; index as idx;' class='ion-no-padding'>
 
-    <h6 class='team-name'>{{team.name}}</h6>
+    <h6 class='team-name'>{{team.manager}}</h6>
 
     <div class='draft-picks-div' *ngFor='let pick of team.picks; index as pickIdx;'>
-      <ion-card [class.active]='pick.player == "active"'>
+      <ion-card [class.active]='checkActive(pickIdx, idx)'>
         
         <!-- card content -->
         <ion-card-content class='draft-pick-content'>
@@ -44,8 +52,8 @@
               <!-- 2 spacer columns -->
               <ion-col></ion-col>
               <ion-col></ion-col>
-              <ion-col size='8' class='dp-team-col ion-text-nowrap'  *ngIf="pick.team != team.teamID">
-                | {{ pick.team }}
+              <ion-col size='8' class='dp-team-col ion-text-nowrap'  *ngIf="pick.team.teamID != team.teamID && pick.team.teamID != 'no-team'">
+                ‣‣&nbsp;&nbsp;{{ pick.team.manager }}
               </ion-col>
               <!-- <ion-col>{{ pick.player.position }}</ion-col>
               <ion-col>{{ pick.player.team }}</ion-col> -->
@@ -60,11 +68,11 @@
             <!-- player image -->
             <ion-row class='player-img-div'>
               <ion-col size='12'>
-                <div class="bg-div" [style.backgroundColor]="pService.getBorderColor(pick.player.position)"></div>
+                <div class="bg-div" [style.backgroundColor]="pService.getPositionColor(pick.player.position)"></div>
                 
-                <div *ngIf='pick.player=="active"' class="bg-div" [style.backgroundColor]="pService.getBorderColor(pick.player)"></div>
+                <div *ngIf='checkActive(pickIdx, idx)' class="bg-div" [style.backgroundColor]="pService.getPositionColor('active')"></div>
                 
-                <ion-text color='light' *ngIf='pick.player=="active"'>On the clock</ion-text>
+                <ion-text color='light' *ngIf='checkActive(pickIdx, idx)'>On the clock</ion-text>
                 
                 <ion-img *ngIf='pick.player.playerID && pick.player != "active"' src="/assets/images/players/{{pick.player.playerID}}.png">
                 </ion-img>

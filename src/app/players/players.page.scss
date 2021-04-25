@@ -4,8 +4,28 @@ ion-header {
     opacity: 0.975;
     position: absolute;
     top: 0px;
-    height: 80px;
-    padding-top: 33px;
+    height: 60px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+    padding-top: 13px;
+
+    ion-chip {
+      padding: 2px;
+      min-width: 50px;
+      font-size: 10px;
+      display: flex;
+      justify-content: center;
+
+      ion-grid {
+        text-align: center;
+        padding: 0;
+
+        ion-row {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
   }
 }
 
@@ -35,10 +55,19 @@ ion-header {
 }
 
 .player-slides {
-  padding-top: 90px;
+  padding-top: 70px;
   height: 100%;
+  width: 100vw;
   overflow-y: scroll;
   z-index: 99;
+  padding-left: 33px;
+  padding-right: 33px;
+
+  .swiper-wrapper {
+    margin-left: -49.5px !important;
+    padding-left: 16px;
+    transform: translateX(17px) !important;
+  }
 
   .swiper-zoom-container {
     ion-card {
@@ -57,6 +86,10 @@ ion-header {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    // width: 150px !important;
+    // margin-left: calc((100vw - 310px) / (-3));
+    // margin-right: calc((100vw - 330px) / (-3));
+    max-width: 158px !important;
 
     div {
       margin: 0px;
@@ -175,7 +208,7 @@ ion-header {
           }
         }
         .stats-row {
-          height: 14px;
+          height: 12px;
           line-height: 12px;
           letter-spacing: 1px;
 
@@ -187,94 +220,6 @@ ion-header {
           }
         }
       }
-
-      /********** OLD CARD STYLES **********/
-      /* ion-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 50px;
-        padding: 0 10px;
-
-        ion-avatar {
-          display: flex;
-          align-items: center;
-
-          height: 100%;
-
-          img {
-            height: 40px;
-            width: auto;
-            min-width: 32px;
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.65);
-          }
-        }
-        ion-card-subtitle {
-          margin: 0 auto 0 5px;
-        }
-      }
-      ion-card-content {
-        padding: 0px 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        .player-info {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          font-size: 80%;
-
-          ion-badge {
-            opacity: 0.5;
-            font-size: 80%;
-          }
-
-          ion-icon {
-            margin-left: 10px;
-            height: 15px;
-          }
-        }
-
-        .player-stats {
-          width: 100%;
-          margin-top: 2px;
-          display: flex;
-          justify-content: space-between;
-
-          .stats-left {
-            width: 70%;
-            text-align: left;
-            p {
-              font-size: 60%;
-            }
-          }
-          .stats-right {
-            width: 30%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 80%;
-
-            ion-badge {
-              text-align: center;
-              font-size: 80%;
-              opacity: 0.9;
-            }
-          }
-        }
-
-        .card-click {
-          font-size: 70%;
-          width: 100%;
-          text-align: center;
-        }
-      }
-      */
     }
   }
 }

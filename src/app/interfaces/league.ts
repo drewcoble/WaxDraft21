@@ -14,7 +14,9 @@ export interface League {
         K: number,
         B: number
     },
-    // try to put collections here...
-    teams?: Team[];
-    draft?: any
+    currentRound?: number,
+    currentPick?: number,
+    numTeams?: number,
+    numRounds?: number,
+    draftedPlayers?: any
 }

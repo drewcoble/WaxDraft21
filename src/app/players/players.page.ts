@@ -42,11 +42,13 @@ export class PlayersPage implements OnInit {
   slideOpts = {
     initialSlide: 1,
     direction: 'horizontal',
+    centeredSlides: false,
     speed: 300,
-    spaceBetween: 8,
+    spaceBetween: 0,
     slidesPerView: 2,
     freeMode: false,
-    loop: false
+    loop: false,
+    grabCursor: 'true'
   };
 
   constructor(
@@ -62,11 +64,7 @@ export class PlayersPage implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.isUser
-       //&& !this.newUser
-       ) {
-      // this.signInToast();
-    }
+    // this.lService.initLeague();
 
     // GET all players from firestore (through the players service)
     // let players = this.pService.getAllPlayers();
@@ -86,11 +84,27 @@ export class PlayersPage implements OnInit {
     
   }
 
-  async presentPopover(ev: any, player) {
+  ionViewDidEnter() {
+    // console.log(this.lService.teams);
+  }
+
+  async presentPopover(ev: any, player, callback) {
+    let teamName = "";
+    if (this.lService.league.currentRound % 2 == 1) {
+      teamName = this.lService.teams[this.lService.league.currentPick - 1].picks[this.lService.league.currentRound - 1].team.manager;
+    }
+    else {
+      teamName = this.lService.teams[12 - this.lService.league.currentPick].picks[this.lService.league.currentRound - 1].team.manager;
+    }
+
     const popover = await this.popoverController.create({
       component: PopoverComponentPage,
       componentProps: {
         'player': player,
+        'callback': callback,
+        'round': this.lService.league.currentRound,
+        'pick': this.lService.league.currentPick,
+        'team': teamName,
       },
       cssClass: 'my-custom-class',
       // event: ev,
@@ -144,8 +158,19 @@ export class PlayersPage implements OnInit {
   draftPlayer(player):void {
     // console.log(player);
     // alert("Draft " + player.data.name + "?");
-    this.presentPopover('click', player);
+    this.presentPopover('click', player, this.ionViewDidEnter);
   }
+
+    getAdpColor(adp) {
+      let pick = ((this.lService.league.currentRound - 1) * 12) + this.lService.league.currentPick;
+      // console.log(pick);
+      if (pick <= (adp - 12)) {
+        return "#eb445a";
+      }
+      else {
+        return "#2dd36f";
+      }
+    }
   
 
 }

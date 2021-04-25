@@ -39,6 +39,7 @@ export class DraftBoardPage implements OnInit {
 
   ionViewWillEnter() {
     // console.log(this.lService.teams);
+    // console.log(this.lService.teams);
     // let teamsDocs = this.lService.getTeams();
     
     // teamsDocs.forEach((doc) => {
@@ -51,6 +52,7 @@ export class DraftBoardPage implements OnInit {
 
   ionViewDidEnter() {
     // console.log(this.app.allTeams);  
+    // this.lService.setActivePick();
   }
 
 
@@ -60,6 +62,22 @@ export class DraftBoardPage implements OnInit {
     }
     else {
       return draftSlot;
+    }
+  }
+
+  checkActive(roundIdx:number, pickIdx:number) {
+    let round = roundIdx + 1;
+    let pick;
+
+    if (round%2 == 0) {
+      pick = 12 - pickIdx;
+    }
+    else {
+      pick = pickIdx + 1;
+    }
+
+    if (round == this.lService.league.currentRound && pick == this.lService.league.currentPick) {
+      return true;
     }
   }
 

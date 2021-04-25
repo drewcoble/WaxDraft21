@@ -1,16 +1,129 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Settings
-    </ion-title>
+<ion-header [translucent]="false" class='ion-no-border'>
+  <ion-toolbar mode="ios">
+    <ion-row style='height: 44px'>
+      <ion-col class='app-name' style='height: 44px;' size='8'>
+        WaxDraft&nbsp;<span style="color: #e668ac">21</span>
+        <!-- {{ (lService.league | async)?.name }} -->
+        <!-- <ion-icon name='arrow-down'></ion-icon> -->
+      </ion-col>
+      <ion-col class='right-side' style='height: 44px;' size='4'>
+        <ion-chip *ngIf='!auth.user' (click)='auth.login()'>
+          Sign In
+        </ion-chip>
+        <ion-chip *ngIf='auth.user' (click)='auth.logout()'>
+          Sign Out
+        </ion-chip>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="false">
+
+  <!-- START of main settings list -->
+  <ion-list *ngIf="lService.league" class='main-list' lines='none' mode="ios">
+
+    <!-- START of main list item 1 -->
+    <ion-item class='main-item'
+    (click)="(leagueSettings == true) ? leagueSettings = false : leagueSettings = true">
+      Draft Settings
+      <ion-icon name="chevron-down-outline" slot='end' *ngIf="!leagueSettings"></ion-icon>
+      <ion-icon name="chevron-up-outline" slot='end' *ngIf="leagueSettings"></ion-icon>
+    </ion-item>
+      <ion-list class='sub-list'  *ngIf="leagueSettings">
+        <ion-item class='sub-item'>
+          <ion-label>League Name:</ion-label>
+          <ion-input value="{{lService.league.name}}" placeholder="{{lService.league.name}}"></ion-input>
+        </ion-item>
+        <ion-item class='sub-item'>
+          <ion-label>Number of Teams:</ion-label>
+          <ion-input value="{{lService.league.numTeams}}" placeholder="{{lService.league.numTeams}}"></ion-input>
+        </ion-item>
+        <ion-item class='sub-item'>
+          <ion-label>Number of Rounds:</ion-label>
+          <ion-input value="{{lService.league.numRounds}}" placeholder="{{lService.league.numRounds}}"></ion-input>
+        </ion-item>
+      </ion-list>
+    <!-- END of main list item 1 -->
+
+    <!-- START of main list item 2 -->
+    <ion-item class='main-item'
+    (click)="(teamSettings == true) ? teamSettings = false : teamSettings = true">
+      Teams
+      <ion-icon name="chevron-down-outline" slot='end' *ngIf="!teamSettings"></ion-icon>
+      <ion-icon name="chevron-up-outline" slot='end' *ngIf="teamSettings"></ion-icon>
+    </ion-item>
+      <ion-reorder-group  class='sub-list' *ngIf="teamSettings" (ionItemReorder)="doReorder($event)" disabled=false>
+
+        <ion-item class='reorder-item' *ngFor="let team of teams; index as idx">
+          
+            <ion-badge color="medium" slot='start'>{{idx+1}}</ion-badge>
+            <ion-input (change)='updateTeamManager($event, idx)' value="{{team.manager}}"  placeholder="{{team.manager}}"></ion-input>
+          
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+
+      </ion-reorder-group>
+    <!-- END of main list item 2 -->
+
+    <!-- START of main list item 3 -->
+    <ion-item class='main-item'
+    (click)="(positionSettings == true) ? positionSettings = false : positionSettings = true">
+      Roster Positions
+      <ion-icon name="chevron-down-outline" slot='end' *ngIf="!positionSettings"></ion-icon>
+      <ion-icon name="chevron-up-outline" slot='end' *ngIf="positionSettings"></ion-icon>
+    </ion-item>
+      <ion-list class='sub-list' *ngIf="positionSettings">
+        <ion-item class='sub-item' *ngFor="let position of ['QB', 'RB', 'WR', 'TE', 'DEF', 'K', 'RWT', 'QRWT', 'B']">
+          <ion-row style="width:100%">
+            <ion-col size="8">
+              <ion-input>{{position}}</ion-input>
+            </ion-col>
+            <ion-col size="4">
+              <ion-input style="text-align: center" value="{{lService.league.positions[position]}}" placeholder="{{lService.league.positions[position]}}"></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    <!-- END of main list item 3 -->
+
+    <!-- START of main list item 4 -->
+    <ion-item class='main-item'
+    (click)="(userSettings == true) ? userSettings = false : userSettings = true">
+      User Settings
+      <ion-icon name="chevron-down-outline" slot='end' *ngIf="!userSettings"></ion-icon>
+      <ion-icon name="chevron-up-outline" slot='end' *ngIf="userSettings"></ion-icon>
+    </ion-item>
+      <ion-list class='sub-list' *ngIf="userSettings">
+        <ion-item class='sub-item'>1</ion-item>
+        <ion-item class='sub-item'>2</ion-item>
+        <ion-item class='sub-item'>3</ion-item>
+      </ion-list>
+    <!-- END of main list item 4 -->
+
+  </ion-list>
+  <!-- END of main settings list -->
+
+  <!-- START of buttons on bottom of settings page -->
+  <ion-buttons class='button-wrapper'>
+    <!-- <ion-button *ngIf="!lService.league" color='wr' (click)="lService.createNewLeague()">
+      New Draft
+    </ion-button> -->
+    <ion-button *ngIf="lService.league" color='qb' (click)="lService.resetDraft()">
+      Reset Draft
+    </ion-button>
+  </ion-buttons>
+  
+  <!-- <ion-buttons class='button-wrapper'>
+    <ion-button (click)='lService.setLocalLeagueID()'>
+      Store League ID
+    </ion-button>
+    <ion-button (click)='lService.setLocalTeamID()'>
+      Store My Team ID
+    </ion-button>
+  </ion-buttons> -->
+  <!-- END of buttons on bottom of settings page -->
+
+  
 
 </ion-content>

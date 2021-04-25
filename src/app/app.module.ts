@@ -24,6 +24,7 @@ import { environment } from '../environments/environment';
 
 //native storage
 import { IonicStorageModule } from '@ionic/storage';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -41,6 +42,7 @@ import { IonicStorageModule } from '@ionic/storage';
     AngularFirestoreModule,
     AngularFireStorageModule,
     PopoverComponentPageModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // HeaderComponentModule
 ],
   providers: [

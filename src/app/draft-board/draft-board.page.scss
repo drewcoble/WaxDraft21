@@ -4,8 +4,35 @@ ion-header {
     opacity: 0.975;
     position: absolute;
     top: 0px;
-    height: 65px;
-    padding-top: 20px;
+    height: 45px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+    // padding-top: 20px;
+
+    ion-row {
+      ion-col {
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+      }
+
+      .right-side {
+        font-size: 10px;
+        justify-content: flex-end;
+
+        ion-chip {
+          font-size: 10px;
+        }
+      }
+
+      .app-name {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 16px;
+      }
+    }
   }
 }
 
@@ -24,7 +51,9 @@ ion-header {
   width: 100vw;
   overflow-y: scroll;
   z-index: 99;
-  padding-top: 70px;
+  padding-top: 50px;
+  padding-left: 33px;
+  padding-right: 33px;
 
   ion-slide {
     min-height: 100%;
@@ -38,7 +67,7 @@ ion-header {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 60%;
+      font-size: 80%;
       width: 93%;
       min-height: 30px;
       text-overflow: ellipsis;
@@ -200,10 +229,11 @@ ion-header {
           }
 
           .dp-team-col {
-            height: 15px;
+            height: 13px;
+            line-height: 13px;
             width: 53.33px;
-            font-size: 8px;
-            font-style: italic;
+            font-size: 10px;
+            // font-style: italic;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -211,7 +241,7 @@ ion-header {
             text-overflow: ellipsis !important;
             white-space: nowrap !important;
             padding: 0;
-            padding-top: 1px;
+            padding-top: 3px;
 
             ::shadow {
               color: #e8e8e8;

@@ -4,24 +4,41 @@ ion-header {
     opacity: 0.975;
     position: absolute;
     top: 0px;
-    height: 65px;
-    padding-top: 20px;
+    height: 45px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+    // padding-top: 20px;
+
+    ion-chip {
+      padding: 2px;
+      min-width: 50px;
+      font-size: 10px;
+      display: flex;
+      justify-content: center;
+    }
 
     ion-row {
       ion-col {
         display: flex;
         align-items: center;
-        justify-content: center;
+        // justify-content: center;
       }
 
-      .league-name {
-        font-size: 16px;
+      .right-side {
+        justify-content: flex-end;
+      }
+
+      .app-name {
+        font-size: 20px;
         font-weight: 600;
         letter-spacing: 2px;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 16px;
       }
     }
   }
 }
+
 ion-content {
   display: flex;
   flex-direction: row;
@@ -33,7 +50,7 @@ ion-content {
 
     .roster-view-row {
       height: 100%;
-      padding-top: 70px;
+      padding-top: 55px;
       padding-bottom: 90px;
 
       .position-labels {
@@ -51,7 +68,7 @@ ion-content {
 
         ion-badge {
           height: 32px;
-          margin: 21px auto 33px;
+          margin: 22px auto 34px;
           padding: auto 2px;
           min-width: 95%;
           max-width: 100%;
@@ -62,7 +79,7 @@ ion-content {
           font-size: 70%;
           letter-spacing: 1px;
           color: #21242b;
-          opacity: 0.9;
+          opacity: 0.85;
           //   border: 2px solid rgba(255, 255, 255, 0.15);
         }
       }
@@ -74,6 +91,11 @@ ion-content {
 
         .my-team-slides {
           margin: 0;
+
+          .my-team-div {
+            // width: 100%;
+            // height: 100%;
+          }
         }
 
         .league-teams-slides {
@@ -86,18 +108,18 @@ ion-content {
           width: 100%;
           //   padding-top: 70px;
 
-          .swiper-slide-prev,
-          .swiper-slide-next {
-            ion-card {
-              transform: scale(0.975) !important;
-            }
-          }
+          // .swiper-slide-prev,
+          // .swiper-slide-next {
+          //   ion-card {
+          //     transform: scale(0.975) !important;
+          //   }
+          // }
 
-          .swiper-slide-active {
-            ion-card {
-              transform: scale(1.02) !important;
-            }
-          }
+          // .swiper-slide-active {
+          //   ion-card {
+          //     transform: scale(1.02) !important;
+          //   }
+          // }
 
           ion-slide {
             display: flex;
@@ -136,11 +158,12 @@ ion-content {
             }
 
             ion-card {
-              width: 100%;
+              padding: 4px 0;
+              width: 104px;
               margin: 6px auto;
-              height: 74px;
+              height: 76px;
               border-radius: 12px;
-              border: 2px solid #262a34;
+              // border: 2px solid #262a34;
               font-size: 10px;
 
               /*ion-card-header {
@@ -159,6 +182,9 @@ ion-content {
                 ion-grid {
                   height: 100%;
                   padding: 0;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
 
                   .top-row {
                     height: 13px;
@@ -228,7 +254,7 @@ ion-content {
                       height: 26px;
                       position: absolute;
                       top: 0;
-                      left: 5px;
+                      left: 9px;
                     }
 
                     ion-text {
