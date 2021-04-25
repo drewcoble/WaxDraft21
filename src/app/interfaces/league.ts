@@ -14,6 +14,7 @@ export interface League {
         K: number,
         B: number
     },
+    myTeamID?: string,
     currentRound?: number,
     currentPick?: number,
     numTeams?: number,

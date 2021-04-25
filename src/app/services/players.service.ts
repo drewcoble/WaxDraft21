@@ -25,7 +25,7 @@ export class PlayersService {
     private afs: AngularFirestore,
     public storage: Storage
   ) {
-    this.initPlayers();
+    // this.initPlayers();
   }
 
   initPlayers() {

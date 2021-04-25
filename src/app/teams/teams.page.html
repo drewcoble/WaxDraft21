@@ -24,7 +24,7 @@
       <ion-col class='ion-no-padding' size='5'>
         <ion-slides class='my-team-slides' [options]='myTeamSlideOpts' mode="ios">
 
-          <ion-slide class="my-team-div" *ngFor="let team of lService.teams" [ngStyle]="(team.teamID != lService.myTeamID) && {'display': 'none'}">
+          <ion-slide class="my-team-div" *ngFor="let team of lService.teams" [ngStyle]="(team.teamID != lService.league.myTeamID) && {'display': 'none'}">
 
               <div class="team-header">
                 <h4 class='team-name'>{{team.manager}}</h4>
@@ -448,7 +448,7 @@
 
 
           
-            <ion-slide *ngFor="let team of lService.teams" [ngStyle]="(team.teamID == lService.myTeamID) && {'display': 'none'}" >
+            <ion-slide *ngFor="let team of lService.teams" [ngStyle]="(team.teamID == lService.league.myTeamID) && {'display': 'none'}" >
               
 
               <div class="team-header">

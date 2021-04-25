@@ -13,7 +13,8 @@ export class AuthService {
   public user = null;
   public uid = null;
 
-  public userDoc;
+  public userCollection: AngularFirestoreCollection;
+  public userDoc: AngularFirestoreDocument;
   public userSub;
   public userLeagueID:string;
 
@@ -23,30 +24,50 @@ export class AuthService {
     public lService: LeagueService,
     public pService: PlayersService,
   ) {
-    
+    this.userCollection = afs.collection('Users');
+
     auth.authState.subscribe(user=> {
 
       console.log('auth state changed', user);
 
       if (user) {
+
         this.user = user;
         this.uid = user.uid;
+
         //subscribe to the user doc where league ID is stored
-        this.userDoc = this.afs.doc(`Users/${user.uid}`);
-        this.userSub = this.userDoc.valueChanges().subscribe((data)=> {
-          console.log(data);
-          if (data.leagueID) {
-            this.lService.leagueID = data.leagueID;
-            this.lService.initLeague();
-          }
-          else {
-            this.lService.createNewLeague(this.storeLeagueID);
-          }
-        })
+        this.userDoc = this.userCollection.doc(user.uid);
+        // console.log(this.userDoc);
+        // if there's a userDoc, subscribe to it.
+        if (this.userDoc) {
+          this.userSub = this.userDoc.valueChanges().subscribe((data)=> {
+            console.log(data);
+            if (data) {
+              this.lService.leagueID = data.leagueID;
+              this.lService.initLeague();
+            }
+            else {
+              this.pService.unsubPlayers();
+              // this.lService.unsubAll();
+              this.lService.setLeagueDefaults();
+              let newLeagueID = this.afs.createId();
+              this.lService.leagueID = newLeagueID;
+              // this.userSub.unsubscribe();
+              this.userCollection.doc(user.uid).set({'leagueID': newLeagueID});
+              this.lService.createNewLeague();
+
+              this.lService.initLeague();
+              // this.lService.resetFirestoreDraftPicks();
+              // this.lService.resetFirestoreRosters();
+              this.pService.initPlayers();
+            }
+          })
+        }
       }
       else {
         this.user = null;
         this.uid = null;
+        this.lService.leagueID = '';
         this.lService.setLeagueDefaults();
       }
 
@@ -80,6 +101,7 @@ export class AuthService {
   logout() {
     this.user = null;
     this.uid = null;
+    this.lService.leagueID = "";
     this.userSub.unsubscribe();
     this.lService.unsubAll();
     this.pService.unsubPlayers();

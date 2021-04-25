@@ -28,8 +28,8 @@ export class LeagueService {
   // }
 
   //storing things to track the draft
-  public currentPick:number;
-  public currentRound:number;
+  // public currentPick:number;
+  // public currentRound:number;
   public draftedPlayers: string[] = [];
 
   //teams variables
@@ -44,26 +44,14 @@ export class LeagueService {
   // myTeamID:string = "AyFiP7mYPsxaBwUcEkOX";
 
   leagueID:string;
-  myTeamID:string;
+  // myTeamID:string;
 
   constructor(
     private afs: AngularFirestore,
     public popoverController: PopoverController,
     public pService: PlayersService,
-    // public auth: AuthService,
-    // public storage: Storage,
   ) {
-    // if (this.auth.user) {
-    //   console.log('inside if (true)');
-    //   console.log(this.auth.user);
-    //   this.leagueID = this.auth.getUserLeagueID();
-    //   this.initLeague();
-    // }
-    // else {
-    //   console.log('lService: no user');
-    //   // set default values for templates
-    //   this.setLeagueDefaults();
-    // }
+ 
   }
 
   initLeague():void {
@@ -73,7 +61,9 @@ export class LeagueService {
     this.leagueSub = this.leagueDoc.valueChanges(
       {idField:'leagueID'}
     ).subscribe((data)=>{
+      // console.log(data);
       this.league = data;
+      this.draftedPlayers = data.draftedPlayers;
     });
         
     //create a new league in firestore
@@ -88,7 +78,7 @@ export class LeagueService {
 
     this.teamsSubscription = this.teamsCollection.valueChanges({idField:'teamID'}).subscribe((data)=>{
       this.teams = data;
-      this.myTeamID = data[0].teamID;
+      // this.league.myTeamID = data[0].teamID;
     });
 
   }
@@ -102,6 +92,7 @@ export class LeagueService {
       draftedPlayers: [],
       leagueID: 'no-league',
       name: 'no-league-name',
+      myTeamID: 'newTeam1',
       numRounds: 15,
       numTeams: 12,
       positions: {
@@ -1428,7 +1419,7 @@ export class LeagueService {
       },
     ];
 
-    this.myTeamID = 'newTeam1';
+    this.draftedPlayers = [];
 
     // if (this.teamsSubscription) {
     //   this.teamsSubscription.unsubscribe();
@@ -1441,6 +1432,8 @@ export class LeagueService {
   unsubAll() {
     this.leagueSub.unsubscribe();
     this.teamsSubscription.unsubscribe();
+    this.teamsCollection = null;
+    this.leagueDoc = null;
   }
 
   getLeague():any {
@@ -1514,13 +1507,15 @@ export class LeagueService {
 
     // add the drafted player to the draft spot
     //if it is an odd round
-    if (this.league.currentRound % 2 == 1) {
-      this.teamsCollection.doc(this.teams[this.league.currentPick - 1].teamID).update({'picks': newPicksArray});
-    }
+    if (this.teamsCollection) {
+      if (this.league.currentRound % 2 == 1) {
+        this.teamsCollection.doc(this.teams[this.league.currentPick - 1].teamID).update({'picks': newPicksArray});
+      }
 
-    //if it is an even round
-    if (this.league.currentRound % 2 == 0) {
-      this.teamsCollection.doc(this.teams[12 - this.league.currentPick].teamID).update({'picks': newPicksArray});
+      //if it is an even round
+      if (this.league.currentRound % 2 == 0) {
+        this.teamsCollection.doc(this.teams[12 - this.league.currentPick].teamID).update({'picks': newPicksArray});
+      }
     }
     
     
@@ -1547,12 +1542,12 @@ export class LeagueService {
     callback();
   }
 
-  createNewLeague(callback) {
+  createNewLeague() {
     // create id for new league
-    let newLeagueID = this.afs.createId();
-    console.log('newLeagueID: ', newLeagueID)
+    
+    // console.log('newLeagueID: ', newLeagueID)
     // create new league and store in firestore
-    this.afs.collection('Leagues').doc(newLeagueID).set({
+    this.afs.collection('Leagues').doc(this.leagueID).set({
       currentPick: 1,
       currentRound: 1,
       draftedPlayers: [],
@@ -1572,21 +1567,165 @@ export class LeagueService {
       },
     }).then(() => {
       // set the leagueID
-      this.leagueID = newLeagueID;
+      // this.leagueID = newLeagueID;
       // store the leagueID under the corresponding user in Users table of firestore
-      callback(newLeagueID);
+      // callback(newLeagueID);
 
       console.log('this.leagueID: ', this.leagueID);
 
-      // generate new teams and add them to the league in firestore
-      
+      console.log(this.teams);
+      let newTeamsCollection = this.afs.collection(`Leagues/${this.leagueID}/teams`)
+
+      for (let i = 0; i < 12; i ++) {
+        let newTeamID = this.afs.createId();
+        if (i == 0) {
+          this.afs.collection('Leagues').doc(this.leagueID).update({myTeamID: newTeamID});
+        }
+        newTeamsCollection.doc(newTeamID).set({
+          'manager': `Team ${i+1}`,
+          'name': `Team ${i+1}`,
+          'pick': i+1,
+          picks: [
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+            {
+              player: {},
+              team: {
+                teamID: newTeamID,
+                manager: `Team ${i+1}`
+              }
+            },
+          ],
+          roster: {
+            B: [1,2,3,4,5,6],
+            DEF: [1],
+            K: [1],
+            QB: [1],
+            QRWT: [],
+            RB: [1,2],
+            RWT: [1],
+            TE: [1],
+            WR: [1,2],
+          },
+        });
+      }
+
+      // this.initLeague();
+      // generate new team IDs and update in firestore
+      // this.teams.forEach(team => {
+
+      //   // let newTeamID = this.afs.createId();
+
+      //   this.afs.collection(`Leagues/${this.leagueID}/teams`).add({name: 'team-name'});
+
+      // });
+
       
 
       // use the reset draft picks function to add draft picks
-      this.resetFirestoreDraftPicks();
+      // this.resetFirestoreDraftPicks();
+
+      //use the reset rosters function to add rosters
+      // this.resetFirestoreRosters();
 
 
-    })
+    }); // END of .then() of League Doc
   }
 
   resetDraft():void {
@@ -1602,12 +1741,13 @@ export class LeagueService {
     this.leagueDoc.update({ 'currentPick': this.league.currentPick });
     // this.storage.set('WAX_currentRound', this.currentRound);
     // this.storage.set('WAX_currentPick', this.currentPick);
+    console.log(this.teams);
 
     //reset the teams' picks
     this.resetFirestoreDraftPicks();
 
     //reset the teams' rosters
-
+    this.resetFirestoreRosters();
   }
 
   resetFirestoreDraftPicks() {
@@ -1637,6 +1777,36 @@ export class LeagueService {
 
       this.teamsCollection.doc(team.teamID).update({'picks': newPicksArray});
     });
+    // re-subscribe real quick
+    this.teamsSubscription = this.teamsCollection.valueChanges({idField:'teamID'}).subscribe((data)=>{
+      this.teams = data;
+    });
+  }
+
+  resetFirestoreRosters() {
+    // unsubscribe real swiftly
+    if (this.teamsSubscription) {
+      this.teamsSubscription.unsubscribe();
+    }
+
+    // update the teams and add (or reset) roster
+    this.teams.forEach(team => {
+      //create new roster object
+      let newRoster = {
+        B: [1,2,3,4,5],
+        DEF: [1],
+        K: [1],
+        QB: [1],
+        QRWT: [],
+        RB: [1,2],
+        RWT: [1],
+        TE: [1],
+        WR: [1,2],
+      };
+
+      this.teamsCollection.doc(team.teamID).update({'roster': newRoster});
+    });
+
     // re-subscribe real quick
     this.teamsSubscription = this.teamsCollection.valueChanges({idField:'teamID'}).subscribe((data)=>{
       this.teams = data;

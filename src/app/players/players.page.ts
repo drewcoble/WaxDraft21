@@ -164,11 +164,14 @@ export class PlayersPage implements OnInit {
     getAdpColor(adp) {
       let pick = ((this.lService.league.currentRound - 1) * 12) + this.lService.league.currentPick;
       // console.log(pick);
-      if (pick <= (adp - 12)) {
+      if (pick <= (adp - 8)) {
         return "#eb445a";
       }
+      else if (pick >= (adp + 8)) {
+        return '#2dd36f';
+      }
       else {
-        return "#2dd36f";
+        return "#fcfefe";
       }
     }
   
