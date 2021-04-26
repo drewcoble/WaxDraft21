@@ -1,31 +1,17 @@
-ion-header {
-  ion-toolbar {
-    --background: var(--ion-color-six);
+ion-fab {
+  margin-bottom: 80px;
+
+  ion-fab-button {
+    font-size: 12px;
+    // line-height: 10px;
+    letter-spacing: 0.75px;
     opacity: 0.975;
-    position: absolute;
-    top: 0px;
-    height: 60px;
-    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
-    padding-top: 13px;
-
-    ion-chip {
-      padding: 2px;
-      min-width: 50px;
-      font-size: 10px;
-      display: flex;
-      justify-content: center;
-
-      ion-grid {
-        text-align: center;
-        padding: 0;
-
-        ion-row {
-          padding: 0;
-          display: flex;
-          justify-content: center;
-        }
-      }
-    }
+    height: 55px;
+    width: 55px;
+    // font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 

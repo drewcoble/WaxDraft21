@@ -15,10 +15,14 @@ export class DraftBoardPage implements OnInit {
   slideOpts = {
     initialSlide: 0,
     direction: 'horizontal',
-    speed: 300,
+    speed: 220,
     spaceBetween: 0,
     slidesPerView: 3,
-    freeMode: false,
+    freeMode: true,
+    freeModeSticky: true,
+    freeModeMomentumRatio: 0.3,
+    freeModeMomentumVelocityRatio: 0.4,
+    // freeModeMomentumBounceRatio: 4,
     loop: false
   };
 

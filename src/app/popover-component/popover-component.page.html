@@ -1,5 +1,5 @@
-<ion-content class='ion-padding'>
-  <ion-grid>
+<ion-content class='ion-padding' mode='ios'>
+  <ion-grid style=' letter-spacing: 1px;'>
     <ion-row>
       <ion-col>Team: {{team}}</ion-col>
     </ion-row>
@@ -7,19 +7,19 @@
       <ion-col>Pick: {{pickRound}}.{{pickNum}}</ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-        <ion-text>Draft {{player.name}}?</ion-text>
+      <ion-col style='display: flex; justify-content: center; align-items: center; text-align: center'>
+        Draft {{player.name}}?
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-button color='rb' (click)='lService.draftPlayer(player, callback)'>
+        <ion-button color='success' (click)='lService.draftPlayer(player, callback)'>
           Draft
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color='qb' (click)='closePopover()'>
+        <ion-button color='danger' (click)='closePopover()'>
           Cancel
         </ion-button>
       </ion-col>

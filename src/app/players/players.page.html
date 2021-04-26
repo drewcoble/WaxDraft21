@@ -1,25 +1,44 @@
-<ion-header [translucent]="false" class="ion-no-border">
-  <!-- <ion-title>WaxDraft 21</ion-title> -->
+<ion-header [translucent]="false" class='ion-no-border'>
   <ion-toolbar mode="ios">
-    <ion-searchbar mode="ios" placeholder=""></ion-searchbar>
-    <ion-chip slot="end" (click)="pService.resortPlayersData()">
-      <ion-grid>
-        <ion-row style="font-size: 10px; letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.3); margin-bottom: 2px;">
-          <!-- <ion-icon color="dark" name="filter" style="margin: 0"></ion-icon> -->
-          SORT
-        </ion-row>
-        <ion-row style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase;">
-          {{pService.sortField}}
-        </ion-row>
-
-      </ion-grid>
-    </ion-chip>
-    <ion-chip *ngIf="!auth.user" (click)='auth.login()' slot="end"> Sign In </ion-chip>
-    <ion-chip *ngIf="auth.user" (click)='auth.logout()' slot="end"> Sign Out </ion-chip>
+    <ion-row style='height: 45px'>
+      <ion-col class='app-name' style='height: 45px;' size='8'>
+        WaxDraft&nbsp;<span style="color: #e668ac">21</span>
+      </ion-col>
+      <ion-col style='height: 45px;' size='4' class='right-side'>
+        <ion-button color='secondary' *ngIf='!auth.user' (click)='auth.login()'>
+          Sign In
+        </ion-button>
+        <ion-button color='secondary' *ngIf='auth.user' (click)='auth.logout()'>
+          Sign Out
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" no-bounce>
+  <!-- player sort FAB -->
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button color='secondary'>
+      <!-- Sort<br>Players -->
+      <ion-icon name="filter"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side='top'>
+      <ion-fab-button (click)='pService.resortPlayersData("adp")' color='medium'>
+        ADP
+      </ion-fab-button>
+      <ion-fab-button (click)='pService.resortPlayersData("tier")' color='medium'>
+        TIER
+      </ion-fab-button>
+      <ion-fab-button (click)='pService.resortPlayersData("ppg20")' color='medium'>
+        PPG20
+      </ion-fab-button>
+      <ion-fab-button (click)='pService.resortPlayersData("ppg21")' color='medium'>
+        PPG21
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-title slot="start">Players</ion-title>
 
   <ion-slides

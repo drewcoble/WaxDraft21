@@ -1,18 +1,16 @@
 <ion-header [translucent]="false" class='ion-no-border'>
   <ion-toolbar mode="ios">
-    <ion-row style='height: 44px'>
-      <ion-col class='app-name' style='height: 44px;' size='8'>
+    <ion-row style='height: 45px'>
+      <ion-col class='app-name' style='height: 45px;' size='8'>
         WaxDraft&nbsp;<span style="color: #e668ac">21</span>
-        <!-- {{ (lService.league | async)?.name }} -->
-        <!-- <ion-icon name='arrow-down'></ion-icon> -->
       </ion-col>
-      <ion-col class='right-side' style='height: 44px;' size='4'>
-        <ion-chip *ngIf='!auth.user' (click)='auth.login()'>
+      <ion-col style='height: 45px;' size='4' class='right-side'>
+        <ion-button color='secondary' *ngIf='!auth.user' (click)='auth.login()'>
           Sign In
-        </ion-chip>
-        <ion-chip *ngIf='auth.user' (click)='auth.logout()'>
+        </ion-button>
+        <ion-button color='secondary' *ngIf='auth.user' (click)='auth.logout()'>
           Sign Out
-        </ion-chip>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-toolbar>

@@ -117,91 +117,91 @@ export class LeagueService {
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam1'
             }
           },
         ],
@@ -226,37 +226,37 @@ export class LeagueService {
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
             player: {},
             team: {
-              teamID: 'no-team'
+              teamID: 'newTeam2'
             }
           },
           {
@@ -1467,11 +1467,142 @@ export class LeagueService {
     
   }
 
-  addPlayerToRoster(player):void {
+  addPlayerToRoster(player, dpTeam, rtIndex):boolean {
     console.log('add player to roster: ' + player.playerID);
+    //get the ID of the team who is rostering this draft pick (is possibly different than the team that is holding the draft pick -- if the pick was traded)
+    let rosterTeam = dpTeam.picks[this.league.currentRound - 1].team;
+    console.log(rosterTeam.teamID);
+
+    let playerAdded:boolean = false;
+    let rSpots = ['QB','RB','WR','TE','DEF','K'];
+    // loop thru the rSpots array
+    for (let i = 0; i < rSpots.length; i++) {
+      //check the player's position first
+      
+      for (let p = 0; p < this.league.positions[player.position]; p++) {
+        if (!playerAdded && !this.teams[rtIndex].roster[player.position][p].playerID) {
+          this.teams[rtIndex].roster[player.position][p] = player;
+          playerAdded = true;
+        }
+      }
+      
+      // next, check for flex eligibilty
+      if (this.league.positions.RWT > 0 &&
+      !playerAdded && (
+      player.position == "RB" || 
+      player.position == "WR" || 
+      player.position == "TE")) {
+        for (let f = 0; f < this.league.positions.RWT; f++) {
+          if (!playerAdded && !this.teams[rtIndex].roster['RWT'][f].playerID) {
+            this.teams[rtIndex].roster['RWT'][f] = player;
+            playerAdded = true;
+          }
+        }
+      } // next, check for super-flex eligibilty
+      if (this.league.positions.QRWT > 0 &&
+      !playerAdded && (
+      player.position == "QB" ||
+      player.position == "RB" || 
+      player.position == "WR" || 
+      player.position == "TE")) {
+        for (let sf = 0; sf < this.league.positions.QRWT; sf++) {
+          if (!playerAdded && !this.teams[rtIndex].roster['QRWT'][sf].playerID) {
+            this.teams[rtIndex].roster['QRWT'][sf] = player;
+            playerAdded = true;
+          }
+        }
+      } // next, add player to bench if a slot is open
+      if (!playerAdded) {
+        for (let b = 0; b < this.league.positions.B; b++) {
+          if (!playerAdded && !this.teams[rtIndex].roster['B'][b].playerID) {
+            this.teams[rtIndex].roster['B'][b] = player;
+            playerAdded = true;
+          }
+        }
+      }
+      
+      //if player finds a spot, update firestore
+      if (playerAdded) {
+        if (this.teamsCollection) {
+          this.teamsCollection.doc(rosterTeam.teamID).update({'roster': this.teams[rtIndex].roster});
+        }
+        return true;
+      }
+      //if player is not added, do not draft him
+      else {
+        return false;
+      }
+    }
+
+    // this.getRosterPosition(player, rosterTeam);
     // console.log(this.draftedPlayers);
-    this.popoverController.dismiss();
+    
   }
+
+  // getRosterPosition(player, rosterTeam):boolean {
+  //   let playerAdded:boolean = false;
+  //   let rSpots = ['QB','RB','WR','TE','DEF','K'];
+  //   // loop thru the rSpots array
+  //   for (let i = 0; i < rSpots.length; i++) {
+  //     // if the player's position matches the rSpot...
+  //     if (player.position == rSpots[i]) {
+  //       // loop through the team's roster of this rSpot
+  //       for (let p = 0; p < this.league.positions[rSpots[i]].length; p++) {
+  //         // if the rSpot on the roster is not occupied by a player already...
+  //         if (!rosterTeam.roster[rSpots[i][p]].playerID && !playerAdded) {
+  //           // add this player to this rSpot
+  //           rosterTeam.roster[rSpots[i][p]] = player;
+  //           playerAdded = true;
+  //           // break the inner for loop
+  //           break;
+  //         }
+  //       }
+  //     } // next, check for flex eligibilty
+  //     else if (this.league.positions.RWT > 0 &&
+  //     !playerAdded && (
+  //     player.position == "RB" || 
+  //     player.position == "WR" || 
+  //     player.position == "TE")) {
+  //       for (let f = 0; f < this.league.positions.RWT; f++) {
+  //         if (!rosterTeam.roster['RWT'][f].playerID) {
+  //           rosterTeam.roster['RWT'][f] = player;
+  //           playerAdded = true;
+  //           break;
+  //         }
+  //       }
+  //     } // next, check for super-flex eligibilty
+  //     else if (this.league.positions.QRWT > 0 &&
+  //     !playerAdded && (
+  //     player.position == "QB" ||
+  //     player.position == "RB" || 
+  //     player.position == "WR" || 
+  //     player.position == "TE")) {
+  //       for (let sf = 0; sf < this.league.positions.QRWT; sf++) {
+  //         if (!rosterTeam.roster['QRWT'][sf].playerID) {
+  //           rosterTeam.roster['QRWT'][sf] = player;
+  //           playerAdded = true;
+  //           break;
+  //         }
+  //       }
+  //     } // next, add player to bench if a slot is open
+  //     else {
+  //       for (let b = 0; b < this.league.positions.B; b++) {
+  //         if (!rosterTeam.roster['B'][b].playerID) {
+  //           rosterTeam.roster['B'][b] = player;
+  //           playerAdded = true;
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     //after all this, if player is still not added, do not draft him.
+  //     if (!playerAdded) {
+  //       return false;
+  //     }
+  //     else {
+  //       return true;
+  //     }
+  //   }
+  // }
 
   nextPick() {
     if (this.league.currentPick == 12) {
@@ -1484,62 +1615,93 @@ export class LeagueService {
   }
 
   draftPlayer(player, callback):void {
-    // add player id to draftedPlayers
-    this.draftedPlayers.push(player.playerID);
-    // set the new draftedPlayers in local storage
-    // this.storage.set('WAX_draftedPlayers', this.draftedPlayers);
-    // set the new draftedPlayers in firestore
-    if (this.leagueDoc) {
-      this.leagueDoc.update({'draftedPlayers': this.draftedPlayers});
-    }
-    // console.log(this.teams[0]);
 
-    // create a new picks array for the current drafting team
-    let newPicksArray = [];
+    // get the team (storing the draft pick) based on round
+    let draftPickTeam:any;
+    let draftPickTeamIndex:number = 0;
+    let rosterTeamIndex:number;
+
     if (this.league.currentRound % 2 == 1) {
-      newPicksArray = this.teams[this.league.currentPick - 1].picks;
+      draftPickTeam = this.teams[this.league.currentPick - 1];
+      draftPickTeamIndex = this.league.currentPick -1;
     }
     else {
-      newPicksArray = this.teams[12 - this.league.currentPick].picks;
+      draftPickTeam = this.teams[12 - this.league.currentPick];
+      draftPickTeamIndex = 12 - this.league.currentPick;
     }
-    //add the player to the new array
-    newPicksArray[this.league.currentRound - 1].player = player;
-
-    // add the drafted player to the draft spot
-    //if it is an odd round
-    if (this.teamsCollection) {
-      if (this.league.currentRound % 2 == 1) {
-        this.teamsCollection.doc(this.teams[this.league.currentPick - 1].teamID).update({'picks': newPicksArray});
+    this.teams.forEach((team, idx) => {
+      if (draftPickTeam.picks[this.league.currentRound - 1].team.teamID == team.teamID) {
+        rosterTeamIndex = idx;
       }
+    })
 
-      //if it is an even round
-      if (this.league.currentRound % 2 == 0) {
-        this.teamsCollection.doc(this.teams[12 - this.league.currentPick].teamID).update({'picks': newPicksArray});
-      }
-    }
-    
-    
+
     // add the drafted player to the CORRECT team
-    this.addPlayerToRoster(player);
+    let draftPlayer = this.addPlayerToRoster(player, draftPickTeam, rosterTeamIndex);
 
-    // change the active pick
-    this.nextPick();
-    // update both in firestore
-    if (this.leagueDoc) {
-      this.leagueDoc.update({ 'currentRound': this.league.currentRound });
-      this.leagueDoc.update({ 'currentPick': this.league.currentPick });
+    // if the player finds a roster spot on the team, continue with the drafting process
+    if (draftPlayer) {
+      // add player id to draftedPlayers
+      this.draftedPlayers.push(player.playerID);
+      // set the new draftedPlayers in local storage
+      // this.storage.set('WAX_draftedPlayers', this.draftedPlayers);
+      // set the new draftedPlayers in firestore
+      if (this.leagueDoc) {
+        this.leagueDoc.update({'draftedPlayers': this.draftedPlayers});
+      }
+      // console.log(this.teams[0]);
+      
+
+      // create a new picks array for the current drafting team
+      let newPicksArray = this.teams[draftPickTeamIndex].picks;
+      // if (this.league.currentRound % 2 == 1) {
+      //   newPicksArray = this.teams[this.league.currentPick - 1].picks;
+      // }
+      // else {
+      //   newPicksArray = this.teams[12 - this.league.currentPick].picks;
+      // }
+      //add the player to the new array
+      newPicksArray[this.league.currentRound - 1].player = player;
+
+      // add the drafted player to the draft spot
+      //if it is an odd round
+      if (this.teamsCollection) {
+
+        this.teamsCollection.doc(draftPickTeam.teamID).update({'picks': newPicksArray});
+
+
+        // if (this.league.currentRound % 2 == 1) {
+        //   this.teamsCollection.doc(this.teams[this.league.currentPick - 1].teamID).update({'picks': newPicksArray});
+        // }
+
+        // //if it is an even round
+        // if (this.league.currentRound % 2 == 0) {
+        //   this.teamsCollection.doc(this.teams[12 - this.league.currentPick].teamID).update({'picks': newPicksArray});
+        // }
+      }
+      
+      
+      
+
+      // change the active pick
+      this.nextPick();
+      // update both in firestore
+      if (this.leagueDoc) {
+        this.leagueDoc.update({ 'currentRound': this.league.currentRound });
+        this.leagueDoc.update({ 'currentPick': this.league.currentPick });
+      }
+      // update both in local storage
+      // this.storage.set('WAX_currentRound', this.currentRound);
+      // this.storage.set('WAX_currentPick', this.currentPick);
+
+
+
+      // this.setActivePick();
+      // this.pService.changePlayerFlag(player);
+      this.popoverController.dismiss();
+      // refresh the DOM with callback function
+      callback();
     }
-    // update both in local storage
-    // this.storage.set('WAX_currentRound', this.currentRound);
-    // this.storage.set('WAX_currentPick', this.currentPick);
-
-
-
-    // this.setActivePick();
-    // this.pService.changePlayerFlag(player);
-
-    // refresh the DOM with callback function
-    callback();
   }
 
   createNewLeague() {

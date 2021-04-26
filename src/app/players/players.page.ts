@@ -28,7 +28,7 @@ export class PlayersPage implements OnInit {
   welcomeSlideOpts = {
     initialSlide: 0,
     direction: 'horizontal',
-    speed: 300,
+    speed: 220,
     spaceBetween: -1,
     slidesPerView: 1,
     freeMode: false,
@@ -43,10 +43,13 @@ export class PlayersPage implements OnInit {
     initialSlide: 1,
     direction: 'horizontal',
     centeredSlides: false,
-    speed: 300,
+    speed: 220,
     spaceBetween: 0,
     slidesPerView: 2,
-    freeMode: false,
+    freeMode: true,
+    freeModeSticky: true,
+    freeModeMomentumRatio: 0.4,
+    freeModeMomentumVelocityRatio: 0.6,
     loop: false,
     grabCursor: 'true'
   };
@@ -106,7 +109,7 @@ export class PlayersPage implements OnInit {
         'pick': this.lService.league.currentPick,
         'team': teamName,
       },
-      cssClass: 'my-custom-class',
+      cssClass: 'popover-styles',
       // event: ev,
       translucent: true
     });

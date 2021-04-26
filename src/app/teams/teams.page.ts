@@ -34,10 +34,13 @@ export class TeamsPage implements OnInit {
     initialSlide: 0,
     centeredSlides: true,
     direction: 'horizontal',
-    speed: 300,
+    speed: 220,
     spaceBetween: 8,
     slidesPerView: 1.45,
-    freeMode: false,
+    freeMode: true,
+    freeModeSticky: true,
+    freeModeMomentumRatio: 0.4,
+    freeModeMomentumVelocityRatio: 0.5,
     loop: false
   };
 

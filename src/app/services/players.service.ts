@@ -19,7 +19,7 @@ export class PlayersService {
   private playersSubscription;
   public players: Player[];
 
-  public sortField = 'adp';
+  // public sortField = 'adp';
   
   constructor(
     private afs: AngularFirestore,
@@ -45,31 +45,21 @@ export class PlayersService {
     this.playersSubscription.unsubscribe();
   }
 
-  resortPlayersData():void {
+  resortPlayersData(sortField):void {
     let sortDir;
 
     //set the new sort field and sort direction
-    if (this.sortField == 'adp') {
-      this.sortField = 'tier';
+    if (sortField == 'adp' || sortField == 'tier') {
       sortDir = 'asc';
     }
-    else if (this.sortField == 'tier') {
-      this.sortField = 'ppg20';
+    else if (sortField == 'ppg20' || sortField == 'ppg21') {
       sortDir = 'desc';
-    }
-    else if (this.sortField == 'ppg20') {
-      this.sortField = 'ppg21';
-      sortDir = 'desc';
-    }
-    else if (this.sortField == 'ppg21') {
-      this.sortField = 'adp';
-      sortDir = 'asc';
     }
 
     // unsubscribe to previous players subscription
     this.playersSubscription.unsubscribe();
     //get a new reference with the new sort value & sort direction
-    this.playersCollection = this.afs.collection('Players', ref => ref.orderBy(this.sortField, sortDir));
+    this.playersCollection = this.afs.collection('Players', ref => ref.orderBy(sortField, sortDir));
     // subscribe to the new players reference
     this.playersCollection.valueChanges(
       {idField:"playerID"}

@@ -8,8 +8,16 @@ ion-tab-bar {
   box-shadow: -2px -3px 5px rgba(0, 0, 0, 0.3);
   align-self: center;
   // border-radius: 12px 12px;
-  opacity: 0.975;
-  height: 40px;
-  padding: 10px 10px 25px;
+  opacity: 0.985;
+  height: 45px;
+  padding: 10px 10px 27px;
   // padding: 10px;
+
+  .tab-selected {
+    color: var(--ion-color-secondary);
+  }
+
+  ion-label {
+    margin: 0;
+  }
 }

@@ -29,6 +29,12 @@ ion-card {
   --background: var(--ion-color-six);
 }
 
+.popover-styles .popover-content {
+  --background: var(--ion-color-six);
+  border-radius: 12px !important;
+  width: 300px;
+}
+
 /* hide the vertical scrollbar in ionic lab view */
 *::-webkit-scrollbar,
 ::-webkit-scrollbar,
@@ -46,4 +52,51 @@ ion-scroll.scroll-y,
 .inner-scroll {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-color-six);
+    opacity: 0.985;
+    position: absolute;
+    top: 0px;
+    height: 45px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+    // padding-top: 20px;
+    padding: 0;
+    display: flex;
+    align-content: center;
+
+    ion-row {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+
+      ion-col {
+        display: flex;
+        align-items: center;
+        padding: 0;
+        // justify-content: center;
+      }
+
+      .right-side {
+        font-size: 10px;
+        justify-content: flex-end;
+
+        ion-button {
+          font-size: 12px;
+          letter-spacing: 1px;
+        }
+      }
+
+      .app-name {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        display: flex;
+        justify-content: flex-start;
+        // padding-left: 16px;
+      }
+    }
+  }
 }
