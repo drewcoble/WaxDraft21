@@ -8,6 +8,18 @@ ion-content {
     }
 
     .sub-list {
+      .hidden {
+        display: none;
+        height: 0;
+        width: 0;
+
+        * {
+          display: none;
+          height: 0;
+          width: 0;
+        }
+      }
+
       .sub-item,
       .reorder-item {
         --background: #090a0a;

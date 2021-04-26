@@ -6,23 +6,26 @@
     <ion-row>
       <ion-col>Pick: {{pickRound}}.{{pickNum}}</ion-col>
     </ion-row>
+
+    <ion-row style='height: 2px; background-color: rgba(230,104,172,0.5); border-radius: 12px; width: 100%; margin: 5px 0;'>
+    </ion-row>
+
     <ion-row>
       <ion-col style='display: flex; justify-content: center; align-items: center; text-align: center'>
         Draft {{player.name}}?
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-col>
+    <ion-row class='button-row'>
+      
         <ion-button color='success' (click)='lService.draftPlayer(player, callback)'>
           Draft
         </ion-button>
-      </ion-col>
-      <ion-col>
+      
         <ion-button color='danger' (click)='closePopover()'>
           Cancel
         </ion-button>
-      </ion-col>
+      
     </ion-row>
 
   </ion-grid>

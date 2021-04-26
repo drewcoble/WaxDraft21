@@ -61,8 +61,8 @@ export class DraftBoardPage implements OnInit {
 
 
   calcPickNumber(draftSlot, draftRound):number {
-    if (draftRound%2 == 0) {
-      return 13 - draftSlot;
+    if (draftRound%2 == 1) {
+      return this.lService.league.numTeams - draftSlot +1;
     }
     else {
       return draftSlot;

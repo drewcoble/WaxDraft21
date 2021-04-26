@@ -3,8 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { PlayersService } from '../services/players.service';
 import { Storage } from '@ionic/storage';
 
-import { ToastController } from '@ionic/angular';
-import { PopoverController } from '@ionic/angular';
+import { ToastController, PopoverController, IonContent } from '@ionic/angular';
 import { PopoverComponentPage } from '../popover-component/popover-component.page';
 import { AppComponent } from '../app.component';
 import { LeagueService } from '../services/league.service';

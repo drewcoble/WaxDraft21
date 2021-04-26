@@ -17,6 +17,11 @@
   padding-left: 33px;
   padding-right: 33px;
 
+  .hidden {
+    display: none;
+    width: 0px;
+  }
+
   ion-slide {
     min-height: 100%;
     padding-bottom: 90px;
@@ -50,7 +55,7 @@
       height: 80px;
       margin: 5px 0;
       border-radius: 12px;
-      border: 2px solid #262a34;
+      border: 2px solid var(--ion-color-six);
       box-sizing: content-box;
       font-size: 10px;
 

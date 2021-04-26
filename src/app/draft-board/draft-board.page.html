@@ -21,19 +21,7 @@
 
 <ion-slides [options]='slideOpts' class='ion-padding-horizontal draft-picks-slides' mode='ios'>
 
-  <!-- Start of slide to display round # 
-  <ion-slide class='ion-no-padding'>
-    <h6 class='team-name'>Round</h6>
-    <div *ngxRange='let round from 0 to draftSettings.numRounds by 1'>
-      <div class='round-num'>
-        Round {{round + 1}}
-      </div>
-    </div>
-  </ion-slide>
-   End of slide to display round # -->
-
-  <ion-slide *ngFor='let team of lService.teams; index as idx;' class='ion-no-padding'>
-
+  <ion-slide *ngFor='let team of lService.teams; index as idx;' class='ion-no-padding' [ngClass]="idx >= lService.league.numTeams ? 'hidden' : 'none' ">
     <h6 class='team-name'>{{team.manager}}</h6>
 
     <div class='draft-picks-div' *ngFor='let pick of team.picks; index as pickIdx;'>
@@ -45,7 +33,7 @@
             <!-- player info (top row) -->
             <ion-row class='dp-top-row'>
               <ion-col size="4" class='pick-num'>
-                {{pickIdx+1}}.{{calcPickNumber(team.pick, pickIdx+1)}}
+                {{pickIdx+1}}.{{calcPickNumber(team.pick, pickIdx)}}
               </ion-col>
               <!-- 2 spacer columns -->
               <ion-col></ion-col>
