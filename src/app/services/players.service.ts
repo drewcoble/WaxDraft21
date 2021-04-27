@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
-// import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 // import { map, take } from 'rxjs/operators';
 
 import { Player } from '../interfaces/player';

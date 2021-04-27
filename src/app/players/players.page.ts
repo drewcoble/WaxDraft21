@@ -87,7 +87,6 @@ export class PlayersPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    // console.log(this.lService.teams);
   }
 
   async presentPopover(ev: any, player, callback) {
@@ -96,7 +95,7 @@ export class PlayersPage implements OnInit {
       teamName = this.lService.teams[this.lService.league.currentPick - 1].picks[this.lService.league.currentRound - 1].team.manager;
     }
     else {
-      teamName = this.lService.teams[12 - this.lService.league.currentPick].picks[this.lService.league.currentRound - 1].team.manager;
+      teamName = this.lService.teams[this.lService.league.numTeams - this.lService.league.currentPick].picks[this.lService.league.currentRound - 1].team.manager;
     }
 
     const popover = await this.popoverController.create({
@@ -164,7 +163,7 @@ export class PlayersPage implements OnInit {
   }
 
     getAdpColor(adp) {
-      let pick = ((this.lService.league.currentRound - 1) * 12) + this.lService.league.currentPick;
+      let pick = ((this.lService.league.currentRound - 1) * this.lService.league.numTeams) + this.lService.league.currentPick;
       // console.log(pick);
       if (pick <= (adp - 8)) {
         return "#eb445a";

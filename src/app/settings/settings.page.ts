@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { LeagueService } from '../services/league.service';
 
-import { IonReorderGroup } from '@ionic/angular';
+import { AlertController, IonReorderGroup } from '@ionic/angular';
 import { ItemReorderEventDetail } from '@ionic/core';
 
 @Component({
@@ -29,7 +29,8 @@ export class SettingsPage implements OnInit {
 
   constructor(
       public auth: AuthService,
-      public lService: LeagueService
+      public lService: LeagueService,
+      public alertController: AlertController,
     ) { }
 
   ngOnInit() {
@@ -37,14 +38,7 @@ export class SettingsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    // this.currentLeague = this.lService.getLeague();
-    // this.teams = this.lService.getTeams(); // gets teams to display/manipulate
 
-    // this.newSettingsObj = "";
-    // this.teamOrderChanged = false;
-    // this.teamPicksChanged = false;
-    // this.settingsChanged = false;
-    // this.newTeams = "";
   }
 
   ionViewWillLeave() {
@@ -62,16 +56,8 @@ export class SettingsPage implements OnInit {
   }
 
   updateRosterPositions($event) {
-    // console.log($event.target.name);
     let pos = $event.target.name;
     let numPos:number = Number($event.detail.value);
-
-    let newPosArray = [];
-    // generate a new array to put in the rosters
-    for (let i = 0; i < numPos; i++) {
-      newPosArray[i] = 'player' + i;
-    }
-    // console.log(newPosArray);
 
     // set the league positions setting
     this.lService.league.positions[pos] = numPos;
@@ -79,9 +65,29 @@ export class SettingsPage implements OnInit {
       this.lService.leagueDoc.update({"positions": this.lService.league.positions});
     }
 
+    //update the team rosters
+    
+
     // set the position for each team
-    this.lService.teams.forEach(team => {
+    this.lService.teams.forEach((team, idx) => {  
+      // create an array for this position
+      let newPosArray = [];
+      // fill the array either with existing players or a string
+      for (let i = 0; i < numPos; i++) {
+        if (typeof team.roster[pos][i] === 'object' && team.roster[pos][i] !== null) {
+          newPosArray[i] = team.roster[pos][i];
+        }
+        else {
+          newPosArray[i] = 'player' + i;
+        }
+        
+      }
+      // console.log(team.manager, newPosArray);
+
       team.roster[pos] = newPosArray;
+      if (this.lService.teamsCollection) {
+        this.lService.teamsCollection.doc(this.lService.teams[idx].teamID).update({"roster": this.lService.teams[idx].roster});
+      }
     })
 
     // this.lService.league.positions[$event.target.name] = $event.detail.value;
@@ -91,12 +97,7 @@ export class SettingsPage implements OnInit {
     console.log(this.lService.league.positions);
 
 
-    // let numRounds = this.calcNumRounds();
-    // console.log(numRounds);
-
-
-    // this.settingsChanged = true;
-    // this.teamPicksChanged = true;
+    this.calcNumRounds();
   }
 
   calcNumRounds() {
@@ -104,16 +105,83 @@ export class SettingsPage implements OnInit {
     let posArray = ['QB', 'RB', 'WR', 'TE', 'DEF', 'K', 'RWT', 'QRWT', 'B'];
 
     for (let i = 0; i < posArray.length; i++) {
-      numRounds += this.lService.league.positions[posArray[i].length];
+      numRounds += this.lService.league.positions[posArray[i]];
     }
-    
+    // console.log(numRounds);
+
     this.lService.league.numRounds = numRounds;
+    if (this.lService.leagueDoc){
+      this.lService.leagueDoc.update({"numRounds": numRounds});
+      // this.lService.resetFirestoreDraftPicks();
+      // unsubscribe real swiftly
+    if (this.lService.teamsSubscription) {
+      this.lService.teamsSubscription.unsubscribe();
+    }
+
+    // update the teams and wipe all the picks
+    this.lService.teams.forEach((team, teamIdx) => {
+
+      // create new picks array
+      let newPicksArray = [];
+      // loop to fill the picks array
+      for (let i = 0; i < this.lService.league.numRounds; i++) {
+        let pick = {};
+        // if the pick exists, use it
+        if (team.picks[i]) {
+          pick = {
+            'player': team.picks[i].player,
+            'team': team.picks[i].team
+          }
+        }
+        // or create a new pick to use
+        else {
+          pick = {
+            'player': {},
+            'team': {
+              'manager': team.manager,
+              'teamID': team.teamID
+            }
+          }
+        }
+        // add the pick to the array
+        newPicksArray.push(pick);
+      }
+
+      // add the array to the right places
+      this.lService.teams[teamIdx].picks = newPicksArray;
+      if (this.lService.teamsCollection) {
+        this.lService.teamsCollection.doc(team.teamID).update({'picks': newPicksArray});
+      }
+    });
+
+    // console.log(this.teams);
+    // re-subscribe real quick
+    this.lService.teamsSubscription = this.lService.teamsCollection.valueChanges({idField:'teamID'}).subscribe((data)=>{
+      this.lService.teams = data;
+    });
+    }
   }
 
   updateTeamManager(event, teamIdx) {
     this.lService.teams[teamIdx].manager = event.target.value;
+    //create a new 'team' object for any draft picks belonging to this team
+    let newTeamPicks = [];
+    let newPickTeam = {
+      "manager": event.target.value,
+      "teamID": this.lService.teams[teamIdx].teamID
+    }
+    //update every pick for this team to the new name
+    this.lService.teams[teamIdx].picks.forEach(pick => {
+      let newPick = {
+        "player": pick.player,
+        "team": newPickTeam
+      }
+      newTeamPicks.push(newPick);
+    })
+    // console.log(newTeamPicks);
+
     if (this.lService.teamsCollection) {
-      this.lService.teamsCollection.doc(this.lService.teams[teamIdx].teamID).update({'manager': event.target.value});
+      this.lService.teamsCollection.doc(this.lService.teams[teamIdx].teamID).update({"manager": event.target.value, "picks": newTeamPicks});
     }
     // this.teamsChanged = true;
   }
@@ -137,12 +205,34 @@ export class SettingsPage implements OnInit {
     console.log(this.lService.teams);
   }
 
-  // syncDraft():void {
-  //   console.log('sync draft');
-  // }
-
   resetDraft():void {
-    console.log('reset draft');
+    this.presentAlertConfirm();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'alert-class',
+      header: 'Reset Draft?',
+      message: 'This will wipe all team rosters and draft picks.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Reset',
+          cssClass: 'reset-button',
+          handler: () => {
+            console.log('Reset Confirmed');
+            this.lService.resetDraft();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

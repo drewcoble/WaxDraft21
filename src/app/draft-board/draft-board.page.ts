@@ -20,8 +20,8 @@ export class DraftBoardPage implements OnInit {
     slidesPerView: 3,
     freeMode: true,
     freeModeSticky: true,
-    freeModeMomentumRatio: 0.3,
-    freeModeMomentumVelocityRatio: 0.4,
+    freeModeMomentumRatio: 0.4,
+    freeModeMomentumVelocityRatio: 0.6,
     // freeModeMomentumBounceRatio: 4,
     loop: false
   };
@@ -74,7 +74,7 @@ export class DraftBoardPage implements OnInit {
     let pick;
 
     if (round%2 == 0) {
-      pick = 12 - pickIdx;
+      pick = this.lService.league.numTeams - pickIdx;
     }
     else {
       pick = pickIdx + 1;

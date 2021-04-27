@@ -54,6 +54,12 @@ ion-scroll.scroll-y,
   scrollbar-width: none; /* Firefox */
 }
 
+.alert-class {
+  button.alert-button.reset-button {
+    color: var(--ion-color-danger) !important;
+  }
+}
+
 ion-header {
   ion-toolbar {
     --background: var(--ion-color-six);

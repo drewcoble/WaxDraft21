@@ -101,20 +101,6 @@
       </ion-list>
     <!-- END of main list item 3 -->
 
-    <!-- START of main list item 4 -->
-    <ion-item class='main-item'
-    (click)="(userSettings == true) ? userSettings = false : userSettings = true">
-      User Settings
-      <ion-icon name="chevron-down-outline" slot='end' *ngIf="!userSettings"></ion-icon>
-      <ion-icon name="chevron-up-outline" slot='end' *ngIf="userSettings"></ion-icon>
-    </ion-item>
-      <ion-list class='sub-list' *ngIf="userSettings">
-        <ion-item class='sub-item'>1</ion-item>
-        <ion-item class='sub-item'>2</ion-item>
-        <ion-item class='sub-item'>3</ion-item>
-      </ion-list>
-    <!-- END of main list item 4 -->
-
   </ion-list>
   <!-- END of main settings list -->
 
@@ -123,7 +109,7 @@
     <!-- <ion-button *ngIf="!lService.league" color='wr' (click)="lService.createNewLeague()">
       New Draft
     </ion-button> -->
-    <ion-button *ngIf="lService.league" color='danger' (click)="lService.resetDraft()">
+    <ion-button *ngIf="lService.league" color='danger' (click)="resetDraft()">
       Reset Draft
     </ion-button>
   </ion-buttons>

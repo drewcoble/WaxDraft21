@@ -40,7 +40,7 @@ export class TeamsPage implements OnInit {
     freeMode: true,
     freeModeSticky: true,
     freeModeMomentumRatio: 0.4,
-    freeModeMomentumVelocityRatio: 0.5,
+    freeModeMomentumVelocityRatio: 0.6,
     loop: false
   };
 

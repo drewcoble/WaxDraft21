@@ -122,10 +122,14 @@ export class LeagueService {
   }
 
   unsubAll() {
-    this.leagueSub.unsubscribe();
-    this.teamsSubscription.unsubscribe();
-    this.teamsCollection = null;
-    this.leagueDoc = null;
+    if (this.leagueSub)
+      this.leagueSub.unsubscribe();
+    if (this.teamsSubscription)
+      this.teamsSubscription.unsubscribe();
+    // if (this.teamsCollection)
+    //   this.teamsCollection = null;
+    // if (this.leagueDoc)
+    //   this.leagueDoc = null;
   }
 
   getLeague():any {
@@ -591,6 +595,7 @@ export class LeagueService {
   }
 
   resetDraft():void {
+    this.unsubAll();
     //reset the drafted players
     this.draftedPlayers = [];
     // this.storage.set('WAX_draftedPlayers', this.draftedPlayers);
@@ -610,6 +615,8 @@ export class LeagueService {
 
     //reset the teams' rosters
     this.resetFirestoreRosters();
+
+    this.initLeague();
   }
 
   resetFirestoreDraftPicks() {
@@ -619,30 +626,38 @@ export class LeagueService {
     }
 
     // update the teams and wipe all the picks
-    this.teams.forEach(team => {
-      //create new pick with team info
-      let pick = {
-        'player': {},
-        'team': {
-          'manager':  team.manager,
-          'teamID': team.teamID,
-          'name': team.name,
-        }
-      }
+    this.teams.forEach((team, teamIdx) => {
 
-      // create new picks array with new pick
+      // create new picks array
       let newPicksArray = [];
+      // loop to fill the picks array
       for (let i = 0; i < this.league.numRounds; i++) {
+
+        let pick = {
+          'player': {},
+          'team': {
+            'manager': team.manager,
+            'teamID': team.teamID
+          }
+        }
+        
+        // add the pick to the array
         newPicksArray.push(pick);
       }
 
-
-      this.teamsCollection.doc(team.teamID).update({'picks': newPicksArray});
+      // add the array to the right places
+      this.teams[teamIdx].picks = newPicksArray;
+      if (this.teamsCollection) {
+        this.teamsCollection.doc(team.teamID).update({'picks': newPicksArray});
+      }
     });
+
+    // console.log(this.teams);
     // re-subscribe real quick
     this.teamsSubscription = this.teamsCollection.valueChanges({idField:'teamID'}).subscribe((data)=>{
       this.teams = data;
     });
+    console.log(this.teams);
   }
 
   resetFirestoreRosters() {
@@ -651,21 +666,29 @@ export class LeagueService {
       this.teamsSubscription.unsubscribe();
     }
 
-    // update the teams and add (or reset) roster
-    this.teams.forEach(team => {
-      //create new roster object
-      let newRoster = {
-        B: [1,2,3,4,5],
-        DEF: [1],
-        K: [1],
-        QB: [1],
+    let posArray = ['QB', 'RB', 'WR', 'TE', 'DEF', 'K', 'RWT', 'QRWT', 'B'];
+    let newRoster = {
+        B: [],
+        DEF: [],
+        K: [],
+        QB: [],
         QRWT: [],
-        RB: [1,2],
-        RWT: [1],
-        TE: [1],
-        WR: [1,2],
+        RB: [],
+        RWT: [],
+        TE: [],
+        WR: [],
       };
+    //create a new roster object with no players
+    // loop through positions
+    for (let i = 0; i < posArray.length; i++) {
+      //loop again to shove things inside each position
+      for (let x = 0; x < this.league.positions[posArray[i]]; x++) {
+        newRoster[posArray[i]][x] = 'player'+x;
+      }
+    }
 
+    // update the teams to reset the rosters
+    this.teams.forEach(team => {
       this.teamsCollection.doc(team.teamID).update({'roster': newRoster});
     });
 
